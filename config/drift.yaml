@@ -1,0 +1,37 @@
+# Sentinel drift thresholds — SPEC §5.
+# SINGLE SOURCE OF TRUTH. ACCEPTANCE anti-gaming rule: thresholds are constants read
+# from one config file, not scattered literals. No threshold value may appear in code.
+
+version: 1
+
+window:
+  records: 50          # §5: evaluated over the last 50 records
+  runs_median: 7       # §5: trailing 7-run median
+  down_streak: 3       # §5: 3 consecutive runs
+
+# One state per source. The worst triggered signal wins.
+# DOWN is worse than DRIFT, DRIFT is worse than HEALTHY.
+state_precedence: [DOWN, DRIFT, HEALTHY]
+
+signals:
+  schema_fail_rate:
+    metric: schema_fail_rate
+    gt: 0.10
+    state: DRIFT
+  required_null_rate:
+    metric: required_null_rate
+    gt: 0.20
+    previous_lt: 0.02
+    state: DRIFT
+  record_count_drop:
+    metric: record_count_ratio
+    lt: 0.40
+    state: DRIFT
+  empty_streak:
+    metric: empty_streak
+    gte: 3
+    state: DOWN
+  http_fail_streak:
+    metric: http_fail_streak
+    gte: 3
+    state: DOWN

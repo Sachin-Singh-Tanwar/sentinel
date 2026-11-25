@@ -1,0 +1,24 @@
+# Sentinel source registry — SPEC §2.
+# Step 1 of the build order (SPEC §13) only configures `books`.
+# The remaining four sources are added at step 5, config-only.
+#
+# Every entry must be public + unauthenticated. The loader refuses (non-zero exit)
+# on any `auth` block, `login: true`, or `captcha: solve` — SPEC §1, §11, ACCEPTANCE A9.
+
+version: 1
+
+sources:
+  - id: books
+    name: books.toscrape.com
+    access: html
+    url: https://books.toscrape.com/catalogue/page-1.html
+    schema: schemas/books.v1.json
+    golden: fixtures/books/golden.json
+    extractor: books.v1
+    drift_character: static HTML playground; structure is stable, so drift is injected deliberately
+
+  # --- step 5, not yet wired -------------------------------------------------
+  # hn        news.ycombinator.com front page  (html)
+  # gh        api.github.com/search/repositories (json)
+  # apify     api.apify.com/v2/store            (json)
+  # remoteok  remoteok.com/api                  (json)
