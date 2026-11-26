@@ -1,0 +1,11 @@
+{
+  "mode": "static snapshot",
+  "base": "https://sachin-singh-tanwar.github.io/sentinel",
+  "console_errors": [],
+  "failures": [],
+  "screenshots": [
+    "../../docs/screenshots/live-site-board.png",
+    "../../docs/screenshots/live-site-incident.png",
+    "../../docs/screenshots/live-site-method.png"
+  ]
+}

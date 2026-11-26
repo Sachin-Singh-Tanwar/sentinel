@@ -1,0 +1,9 @@
+{
+  "id": "remoteok.v1",
+  "fields": {
+    "position": {"type": "string", "required": true},
+    "company":  {"type": "string", "required": true},
+    "url":      {"type": "url",    "required": true},
+    "date":     {"type": "string", "required": false}
+  }
+}

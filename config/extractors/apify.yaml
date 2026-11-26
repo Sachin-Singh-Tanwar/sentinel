@@ -1,0 +1,23 @@
+# Extractor versions for `apify` (api.apify.com/v2/store).
+#
+# JSON. `stats.totalUsers` is the field most likely to change shape, which is what
+# makes this source worth watching.
+
+source: apify
+
+versions:
+  - version: apify.v1
+    mode: json
+    notes: Actor store listing, public unauthenticated endpoint
+    container: data.items
+    require: title
+    fields:
+      title:
+        path: title
+      username:
+        path: username
+      url:
+        path: url
+      users:
+        path: stats.totalUsers
+        parse: int

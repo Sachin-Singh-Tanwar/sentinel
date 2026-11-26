@@ -1,0 +1,8 @@
+{
+  "id": "hn.v1",
+  "fields": {
+    "title": {"type": "string", "required": true},
+    "url":   {"type": "url",    "required": true},
+    "rank":  {"type": "string", "required": true}
+  }
+}

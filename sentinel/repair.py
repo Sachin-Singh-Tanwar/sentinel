@@ -15,7 +15,7 @@ from typing import Any
 
 from . import db as store
 from .config import Source
-from .engine import Extractor
+from .factory import build
 from .gate import evaluate, field_accuracies
 from .propose import propose
 from .schema import load_schema
@@ -117,7 +117,7 @@ def attempt_repair(
     baseline = {}
     if healthy_doc:
         healthy_report = evaluate(
-            Extractor(incumbent_spec).extract(healthy_doc, url), golden_records, schema
+            build(incumbent_spec).extract(healthy_doc, url), golden_records, schema
         )
         baseline = field_accuracies(healthy_report)
 
@@ -141,7 +141,7 @@ def attempt_repair(
             reasons=["no candidate"],
         )
 
-    candidate_records = Extractor(candidate_spec).extract(broken_doc, url)
+    candidate_records = build(candidate_spec).extract(broken_doc, url)
     gate_report = evaluate(
         candidate_records, golden_records, schema, baseline=baseline
     )

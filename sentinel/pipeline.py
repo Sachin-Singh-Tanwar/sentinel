@@ -14,7 +14,7 @@ from typing import Any, Callable
 from . import db as store
 from .config import Source
 from .drift import evaluate, stats_from_rows
-from .engine import Extractor
+from .factory import build
 from .fetch import fetch_text, mutate_layout, new_client
 from .schema import load_schema, validate_many
 from .versions import ensure_active
@@ -43,7 +43,7 @@ def run_source(
     rev = injected_rev(conn, source.id)
     staged = rev != 1
     spec = ensure_active(conn, source)
-    extractor = Extractor(spec)
+    extractor = build(spec)
     schema = load_schema(source.schema_path)
 
     started_at = store.utc_now()

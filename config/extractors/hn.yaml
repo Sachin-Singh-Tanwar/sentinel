@@ -1,0 +1,21 @@
+# Extractor versions for `hn` (news.ycombinator.com front page).
+#
+# HTML, same engine as books. The submission row carries the rank and the title
+# anchor; the score and comment count live in the following <tr>, so they are not
+# read here. One request per run, no detail pages.
+
+source: hn
+
+versions:
+  - version: hn.v1
+    notes: front page submission rows as published
+    container: "//tr[contains(@class,'athing')]"
+    fields:
+      title:
+        xpath: ".//span[contains(@class,'titleline')]/a"
+      url:
+        xpath: ".//span[contains(@class,'titleline')]/a"
+        attr: href
+        absolute: true
+      rank:
+        xpath: ".//span[contains(@class,'rank')]"

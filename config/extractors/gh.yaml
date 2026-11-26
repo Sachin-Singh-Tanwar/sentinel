@@ -1,0 +1,24 @@
+# Extractor versions for `gh` (api.github.com/search/repositories).
+#
+# JSON. `container` is a dot path to the list; each field is a dot path inside an
+# item. No token: the unauthenticated endpoint is rate-limited, and a 403 is a
+# signal (http_fail_streak), not something to work around.
+
+source: gh
+
+versions:
+  - version: gh.v1
+    mode: json
+    notes: search results for repositories above 50k stars
+    container: items
+    require: full_name
+    fields:
+      full_name:
+        path: full_name
+      stars:
+        path: stargazers_count
+        parse: int
+      url:
+        path: html_url
+      language:
+        path: language

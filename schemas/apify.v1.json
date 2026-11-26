@@ -1,0 +1,9 @@
+{
+  "id": "apify.v1",
+  "fields": {
+    "title":    {"type": "string",  "required": true},
+    "username": {"type": "string",  "required": true},
+    "url":      {"type": "url",     "required": true},
+    "users":    {"type": "integer", "required": false}
+  }
+}

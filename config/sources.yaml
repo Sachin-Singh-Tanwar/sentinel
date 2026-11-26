@@ -1,6 +1,7 @@
 # Sentinel source registry — SPEC §2.
-# Step 1 of the build order (SPEC §13) only configures `books`.
-# The remaining four sources are added at step 5, config-only.
+# Step 1 of the build order (SPEC §13) configures `books`.
+# Step 5 adds the remaining four. Every entry is public and unauthenticated, and
+# adding one is a config change: no parser code knows any source by name.
 #
 # Every entry must be public + unauthenticated. The loader refuses (non-zero exit)
 # on any `auth` block, `login: true`, or `captcha: solve` — SPEC §1, §11, ACCEPTANCE A9.
@@ -17,8 +18,38 @@ sources:
     extractor: books.v1
     drift_character: static HTML playground; structure is stable, so drift is injected deliberately
 
-  # --- step 5, not yet wired -------------------------------------------------
-  # hn        news.ycombinator.com front page  (html)
-  # gh        api.github.com/search/repositories (json)
-  # apify     api.apify.com/v2/store            (json)
-  # remoteok  remoteok.com/api                  (json)
+  - id: hn
+    name: news.ycombinator.com
+    access: html
+    url: https://news.ycombinator.com/
+    schema: schemas/hn.v1.json
+    golden: fixtures/hn/golden.json
+    extractor: hn.v1
+    drift_character: real HTML layout drift on the front page; no auth
+
+  - id: gh
+    name: api.github.com/search/repositories
+    access: json
+    url: https://api.github.com/search/repositories?q=stars:%3E50000&sort=stars&per_page=20
+    schema: schemas/gh.v1.json
+    golden: fixtures/gh/golden.json
+    extractor: gh.v1
+    drift_character: stable schema; unauthenticated rate limits are the real drift signal
+
+  - id: apify
+    name: api.apify.com/v2/store
+    access: json
+    url: https://api.apify.com/v2/store?limit=20
+    schema: schemas/apify.v1.json
+    golden: fixtures/apify/golden.json
+    extractor: apify.v1
+    drift_character: field drift in pricing model and stats shape
+
+  - id: remoteok
+    name: remoteok.com/api
+    access: json
+    url: https://remoteok.com/api
+    schema: schemas/remoteok.v1.json
+    golden: fixtures/remoteok/golden.json
+    extractor: remoteok.v1
+    drift_character: occasional shape changes in the job feed

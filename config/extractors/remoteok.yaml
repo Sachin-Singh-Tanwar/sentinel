@@ -1,0 +1,22 @@
+# Extractor versions for `remoteok` (remoteok.com/api).
+#
+# JSON array at the document root, so `container` is empty. The first element is a
+# legal notice rather than a job; `require: position` drops it and anything like it.
+
+source: remoteok
+
+versions:
+  - version: remoteok.v1
+    mode: json
+    notes: public job feed; entry 0 is a terms-of-service notice
+    container: ""
+    require: position
+    fields:
+      position:
+        path: position
+      company:
+        path: company
+      url:
+        path: url
+      date:
+        path: date

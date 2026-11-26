@@ -53,23 +53,58 @@ jobs:
             echo "no data branch yet — starting fresh"
           fi
 
+      # Step 5 sources are config-only. Collect them before the books demo so the
+      # board the dashboard renders has all five rows.
+      - name: collect the four config-only sources
+        env:
+          SENTINEL_DB: state/sentinel.db
+        run: |
+          for source in hn gh apify remoteok; do
+            echo "--- $source"
+            python -m sentinel.cli run --source "$source"
+          done
+
       - name: staged demo (healthy -> drift -> gate -> verified -> revert)
         env:
           SENTINEL_DB: state/sentinel.db
         run: python scripts/demo.py state/data
 
+      # SQLite runs in WAL mode; checkpoint so the committed .db is complete.
+      - name: checkpoint the demo database
+        run: |
+          python - <<'PY'
+          import sqlite3
+          conn = sqlite3.connect("state/sentinel.db")
+          conn.execute("PRAGMA wal_checkpoint(TRUNCATE)")
+          conn.close()
+          PY
+
+      # Append-only, same pattern as Tally: clone the branch, add one commit,
+      # push it. History is never rewritten.
       - name: publish the data branch
         run: |
-          mkdir -p publish
+          REMOTE="https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git"
+          rm -rf publish
+          if git clone -q --branch data --single-branch "$REMOTE" publish; then
+            echo "appending to the existing data branch"
+          else
+            echo "no data branch yet — creating it"
+            git init -q -b data publish
+            git -C publish remote add origin "$REMOTE"
+          fi
+          rm -rf publish/data
           cp -r state/data publish/data
-          if [ -f state/sentinel.db ]; then cp state/sentinel.db publish/sentinel.db; fi
-          cd publish
-          git init -q -b data
-          git add -A
-          git -c user.name="sentinel-bot" -c user.email="sentinel-bot@users.noreply.github.com" \
-            commit -q -m "data: demo run $(date -u +%FT%TZ)"
-          git push --force \
-            "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" data
+          cp state/sentinel.db publish/sentinel.db
+          git -C publish add -A
+          if git -C publish diff --cached --quiet; then
+            echo "data unchanged"
+          else
+            git -C publish \
+              -c user.name="sentinel-bot" \
+              -c user.email="sentinel-bot@users.noreply.github.com" \
+              commit -q -m "data: demo run $(date -u +%FT%TZ)"
+            git -C publish push origin data
+          fi
 
       - uses: actions/setup-node@v4
         with:

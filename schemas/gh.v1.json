@@ -1,0 +1,9 @@
+{
+  "id": "gh.v1",
+  "fields": {
+    "full_name": {"type": "string",  "required": true},
+    "stars":     {"type": "integer", "required": true},
+    "url":       {"type": "url",     "required": true},
+    "language":  {"type": "string",  "required": false}
+  }
+}
