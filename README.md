@@ -100,7 +100,7 @@ candidate is stored on the incident for review and is never made active.
 | A4 | Gate rejects a wrong repair | price+rating null → REJECT at 0.6000, nothing applied; truncated 10/20 → REJECT at 0.5000 | **pass** |
 | A5 | Gate accepts a correct repair | PASS at 1.0000, `books.v2` created and made active | **pass** |
 | A6 | Repairs are revertible | revert to `books.v1`, next run 20 rec, 0 schema failures, golden reproduced | **pass** |
-| A7 | MTTR is real | `verified_at − drift_detected_at` = 4s, rendered in the UI | **pass** |
+| A7 | MTTR is real | live incident #1: `06:35:16.206207Z` → `06:35:16.635279Z`, 1s, rendered in the UI | **pass** |
 | A8 | Staged incidents labelled | `STAGED DEMO` badge rendered; 0 unlabelled staged incidents | **pass** |
 | A9 | Refusals enforced | loader raises; CLI exits non-zero on `login: true` and `captcha: solve` | **pass** |
 | A10 | Dashboard reads live API | 3 screens, 0 console errors in static and live-API modes; 50.49 kB gzip JS | **pass** |
