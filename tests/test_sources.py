@@ -54,8 +54,8 @@ GITHUB = """
 {
   "total_count": 2,
   "items": [
-    {"full_name": "a/one", "stargazers_count": 120000, "html_url": "https://github.com/a/one", "language": "Go"},
-    {"full_name": "b/two", "stargazers_count": 90000, "html_url": "https://github.com/b/two", "language": null}
+    {"full_name": "a/one", "stargazers_count": 120000, "pushed_at": "2026-11-25T00:00:00Z", "language": "Go"},
+    {"full_name": "b/two", "stargazers_count": 90000, "pushed_at": "2026-11-24T00:00:00Z", "language": null}
   ]
 }
 """
@@ -85,10 +85,10 @@ def test_json_engine_reads_nested_container_and_typed_fields():
 
     assert len(records) == 2
     assert records[0] == {
-        "full_name": "a/one",
+        "repo": "a/one",
         "stars": 120000,
-        "url": "https://github.com/a/one",
         "language": "Go",
+        "pushed_at": "2026-11-25T00:00:00Z",
     }
     assert records[1]["language"] is None
     schema = load_schema(ROOT / "schemas" / "gh.v1.json")
@@ -117,5 +117,5 @@ def test_html_engine_still_reads_hn_rows():
     records = build(_spec("hn")).extract(markup, "https://news.ycombinator.com/")
 
     assert records == [
-        {"title": "A post", "url": "https://example.test/post", "rank": "1."}
+        {"title": "A post", "url": "https://example.test/post", "rank": 1.0, "points": None}
     ]

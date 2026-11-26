@@ -1,0 +1,187 @@
+{
+  "source": "remoteok",
+  "schema_version": "remoteok.v1",
+  "captured_at": "2026-11-25T16:38:24+00:00",
+  "frozen": true,
+  "count": 20,
+  "required_fields": [
+    "position",
+    "company"
+  ],
+  "optional_fields": [
+    "tags",
+    "date"
+  ],
+  "records": [
+    {
+      "position": "Senior Global Partner Specialist - USA",
+      "company": "Storyblok",
+      "tags": [
+        "other"
+      ],
+      "date": "2026-11-24T11:40:05+00:00"
+    },
+    {
+      "position": "Senior Corporate Accountant - Tax",
+      "company": "Salesloft",
+      "tags": [
+        "finance"
+      ],
+      "date": "2026-11-24T11:20:07+00:00"
+    },
+    {
+      "position": "Sr EHR Implementation Manager",
+      "company": "Natera",
+      "tags": [
+        "exec"
+      ],
+      "date": "2026-11-24T11:20:04+00:00"
+    },
+    {
+      "position": "Regional Vice President, Biddable",
+      "company": "Doximity",
+      "tags": [
+        "product"
+      ],
+      "date": "2026-11-24T11:00:06+00:00"
+    },
+    {
+      "position": "Security Engineer, Offensive Security",
+      "company": "Dropbox",
+      "tags": [
+        "devops"
+      ],
+      "date": "2026-11-24T11:00:04+00:00"
+    },
+    {
+      "position": "Principal Software Engineer",
+      "company": "Ping Identity",
+      "tags": [
+        "devops"
+      ],
+      "date": "2026-11-24T10:52:58+00:00"
+    },
+    {
+      "position": "Senior Software Engineer, AI & Science Platform",
+      "company": "Reddit",
+      "tags": [
+        "programming"
+      ],
+      "date": "2026-11-24T10:52:19+00:00"
+    },
+    {
+      "position": "Staff Software Engineer, Control Plane",
+      "company": "Cribl",
+      "tags": [
+        "programming"
+      ],
+      "date": "2026-11-24T10:52:17+00:00"
+    },
+    {
+      "position": "Senior Web Engineer, Profile & Community",
+      "company": "Airbnb",
+      "tags": [
+        "programming"
+      ],
+      "date": "2026-11-24T10:40:05+00:00"
+    },
+    {
+      "position": "Associate, Payment Integrity",
+      "company": "Oscar Health",
+      "tags": [
+        "programming"
+      ],
+      "date": "2026-11-24T10:40:03+00:00"
+    },
+    {
+      "position": "District Manager, Enterprise - Healthcare (Southeast)",
+      "company": "Everpure",
+      "tags": [
+        "sales"
+      ],
+      "date": "2026-11-24T10:20:06+00:00"
+    },
+    {
+      "position": "Senior Account Executive - SaaS Industrials",
+      "company": "Salsify",
+      "tags": [
+        "sales"
+      ],
+      "date": "2026-11-24T10:20:04+00:00"
+    },
+    {
+      "position": "Partner Sales Manager (Hindi Speaking) - Singapore",
+      "company": "Dropbox",
+      "tags": [
+        "sales"
+      ],
+      "date": "2026-11-24T10:00:05+00:00"
+    },
+    {
+      "position": "Sr. Account Executive, AI & HPC",
+      "company": "Everpure",
+      "tags": [
+        "sales"
+      ],
+      "date": "2026-11-24T10:00:03+00:00"
+    },
+    {
+      "position": "Director, Product Marketing (Contractor)",
+      "company": "Glossier",
+      "tags": [
+        "marketing"
+      ],
+      "date": "2026-11-24T09:40:05+00:00"
+    },
+    {
+      "position": "Portfolio Customer Success Manager",
+      "company": "LastPass",
+      "tags": [
+        "customer support"
+      ],
+      "date": "2026-11-24T09:20:05+00:00"
+    },
+    {
+      "position": "Region Head, Asia",
+      "company": "Dropbox",
+      "tags": [
+        "customer support"
+      ],
+      "date": "2026-11-24T09:20:04+00:00"
+    },
+    {
+      "position": "Revenue Operations Analyst",
+      "company": "Augment",
+      "tags": [
+        "analyst",
+        "saas",
+        "recruiter",
+        "customer support",
+        "marketing",
+        "exec"
+      ],
+      "date": "2026-11-24T08:00:11+00:00"
+    },
+    {
+      "position": "Senior Manager, Enterprise Application Development Engineering",
+      "company": "GitLab",
+      "tags": [
+        "devops"
+      ],
+      "date": "2026-11-24T00:20:07+00:00"
+    },
+    {
+      "position": "Real Estate Executive Assistant 21370",
+      "company": "Wing Assistant",
+      "tags": [
+        "virtual assistant",
+        "sys admin",
+        "infosec",
+        "education",
+        "technical",
+        "marketing"
+      ],
+      "date": "2026-11-24T00:00:20+00:00"
+    }
+  ]
+}

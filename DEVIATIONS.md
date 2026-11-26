@@ -1,28 +1,33 @@
 # DEVIATIONS
 
-`SPEC.md` is frozen and was not edited. This file records (a) any deviation and
+`SPEC.md` was amended once, under the owner-locked A2 decision recorded in §3 and
+item 7 below; otherwise it is frozen. This file records (a) any deviation and
 (b) decisions the spec is silent on, so they are reviewable rather than buried.
 
-**Status: one deviation, authorised by the owner on 2026-11-26 (item 1).**
-Everything else follows SPEC §13 order.
+**Status: two authorised reconciliation decisions, both made on 2026-11-26
+(items 1 and 7).** Everything else follows SPEC §13 order.
 
 ## Deviations
 
-### 1. `stock` is no longer a required field (authorised)
+### 1. `books.v1` schema reconciliation (authorised)
 
-SPEC §3's example schema marks `stock` as `required: true`. The catalogue listing
-does not publish stock counts at all — it renders `In stock`, while the count
-(`In stock (22 available)`) exists only on each book's detail page. The owner's
+Three versions of the books metadata existed before A2: SPEC §3 marked both
+`rating` and `stock` required; the independent capture script listed both as
+optional; the report showed `rating` present and `stock: null`. The catalogue
+listing does not publish stock counts at all — it renders `In stock`, while the
+count (`In stock (22 available)`) exists only on each book's detail page. The
 first capture therefore recorded `stock: 0` for all 20 records, which is wrong for
 the real source and would have taught a correct extractor to be wrong.
 
-Decision: `books.v1` required fields are `title`, `price`, `url`. `rating` and
-`stock` are optional, and golden records carry `stock: null`.
+**Owner-locked decision:** `books.v1` required fields are `title`, `price`,
+`rating`, `url`; `stock` is **OPTIONAL**. This supersedes both earlier variants.
+`SPEC.md` §3 and `schemas/books.v1.json` now say exactly that, so there is no
+second silent schema.
 
 Consequence: a run is **one** request (the listing page), not 21. `stock` is still
 extracted when a page publishes it; it is simply not allowed to decide whether a
-repair is correct. The golden set keeps 20 records of `title, price, rating, url`
-with `stock: null` and stays sealed at
+repair is correct. The sealed golden set keeps 20 records of `title, price,
+rating, url` with `stock: null` and is untouched at
 `ee01e30e0b65063abc6f79c0c2c92829fbec9e18b9d2eb84c1ec94b4e82d197d`.
 
 ## Spec-silent decisions (implementation notes, not deviations)
@@ -68,10 +73,30 @@ start of the next run. Each CI run clones the branch, adds exactly one commit, a
 pushes it — history is appended, never rewritten. The dashboard still reads only the
 JSON, so it keeps working when the API is down.
 
-### 6. The four step-5 sources have no golden set yet
+### 6. The four step-5 golden sets have landed
 
-`hn`, `gh`, `apify` and `remoteok` are configured, run, and validated against their
-schemas, but their 20-record golden sets were to be handed over from the VM and are
-not in this repo. They are never self-captured, because a golden set the system
-produced cannot certify the system (SPEC §4). ACCEPTANCE A2 is reported as
-**UNVERIFIED** for those four until the handover files land; A1, A3–A10 are unaffected.
+Resolved on 2026-11-26: the partner-verified `hn`, `gh`, `apify` and `remoteok`
+fixtures were copied unchanged from the VM and sealed. They were not re-captured by
+the running system (SPEC §4). ACCEPTANCE A2 is now reported as **5/5**; A1, A3–A10
+are unaffected.
+
+### 7. Step-5 schemas reconciled with partner metadata (authorised)
+
+The four handover fixtures carry `schema_version`, `required_fields` and
+`optional_fields`. Their field names did not match the first local drafts
+(`hn.rank` was a required string; `gh` used `full_name`/`url`; `apify` used
+`username`/`url`/`users`; `remoteok` required `url`). Those drafts are replaced,
+not kept as a second mapping:
+
+| schema | required | optional |
+|---|---|---|
+| `hn.v1` | `title`, `url` | `rank`, `points` |
+| `gh.v1` | `repo`, `stars` | `language`, `pushed_at` |
+| `apify.v1` | `title`, `owner` | `total_users`, `pricing_model` |
+| `remoteok.v1` | `position`, `company` | `tags`, `date` |
+
+`SPEC.md` §3, `schemas/*.v1.json` and `config/extractors/*.yaml` now use this one
+field set per source. `tags` is a `list`; `schema.py` validates that type and
+`json_engine.py` passes lists through unchanged. `gh` keeps its five null
+`language` values because `language` is optional. All four fixtures have zero nulls
+in their required fields.

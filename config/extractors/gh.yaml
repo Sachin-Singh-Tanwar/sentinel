@@ -2,7 +2,8 @@
 #
 # JSON. `container` is a dot path to the list; each field is a dot path inside an
 # item. No token: the unauthenticated endpoint is rate-limited, and a 403 is a
-# signal (http_fail_streak), not something to work around.
+# signal (http_fail_streak), not something to work around. Fields match the
+# partner-verified gh.v1 fixture: repo, stars, language, pushed_at.
 
 source: gh
 
@@ -13,12 +14,12 @@ versions:
     container: items
     require: full_name
     fields:
-      full_name:
+      repo:
         path: full_name
       stars:
         path: stargazers_count
         parse: int
-      url:
-        path: html_url
       language:
         path: language
+      pushed_at:
+        path: pushed_at

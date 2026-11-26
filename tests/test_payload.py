@@ -3,10 +3,12 @@
 import json
 from pathlib import Path
 
+import pytest
+
 from sentinel import db as store
 from sentinel import golden
 from sentinel.config import get_source
-from sentinel.export import build_incident, export_all
+from sentinel.export import build_incident, build_incidents, export_all
 from sentinel.pipeline import healthy_snapshot_path, inject_drift, run_source
 from sentinel.repair import attempt_repair
 
@@ -55,6 +57,23 @@ def test_incident_payload_has_everything_the_ui_needs(tmp_path):
     kinds = [event["kind"] for event in payload["timeline"]]
     assert "drift_detected" in kinds
     assert "gate_pass" in kinds
+
+
+def test_timing_is_split_into_detection_and_repair(tmp_path):
+    conn, incident_id = _resolved(tmp_path)
+    payload = build_incident(conn, incident_id)
+
+    assert payload["detection_seconds"] > 0
+    assert payload["repair_seconds"] > 0
+    # MTTR stays in the payload for the API contract, but it is the two phases
+    # added together — the UI reports the phases, not the rounded total.
+    assert payload["detection_seconds"] + payload["repair_seconds"] == pytest.approx(
+        payload["mttr_seconds"], abs=1.0
+    )
+
+    listed = build_incidents(conn)["incidents"][0]
+    assert listed["detection_seconds"] == payload["detection_seconds"]
+    assert listed["repair_seconds"] == payload["repair_seconds"]
 
 
 def test_static_export_is_self_contained(tmp_path):

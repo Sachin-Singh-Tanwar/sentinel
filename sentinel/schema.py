@@ -46,6 +46,8 @@ def _check_type(spec: dict[str, Any], value: Any) -> str | None:
         if isinstance(value, bool) or not isinstance(value, (int, float)):
             return "not a number"
         return None
+    if kind == "list":
+        return None if isinstance(value, list) else "not a list"
     if kind == "integer":
         if isinstance(value, bool) or not isinstance(value, int):
             return "not an integer"

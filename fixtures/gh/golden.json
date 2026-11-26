@@ -1,0 +1,137 @@
+{
+  "source": "gh",
+  "schema_version": "gh.v1",
+  "captured_at": "2026-11-25T16:38:20+00:00",
+  "frozen": true,
+  "count": 20,
+  "required_fields": [
+    "repo",
+    "stars"
+  ],
+  "optional_fields": [
+    "language",
+    "pushed_at"
+  ],
+  "records": [
+    {
+      "repo": "codecrafters-io/build-your-own-x",
+      "stars": 565472,
+      "language": "Markdown",
+      "pushed_at": "2026-11-19T05:32:02Z"
+    },
+    {
+      "repo": "sindresorhus/awesome",
+      "stars": 542674,
+      "language": null,
+      "pushed_at": "2026-09-02T02:10:47Z"
+    },
+    {
+      "repo": "public-apis/public-apis",
+      "stars": 501366,
+      "language": "Python",
+      "pushed_at": "2026-11-22T19:57:21Z"
+    },
+    {
+      "repo": "morluto/rea",
+      "stars": 478110,
+      "language": "TypeScript",
+      "pushed_at": "2026-11-25T16:37:32Z"
+    },
+    {
+      "repo": "freeCodeCamp/freeCodeCamp",
+      "stars": 459620,
+      "language": "TypeScript",
+      "pushed_at": "2026-11-25T15:48:37Z"
+    },
+    {
+      "repo": "EbookFoundation/free-programming-books",
+      "stars": 402277,
+      "language": "Python",
+      "pushed_at": "2026-11-25T16:23:45Z"
+    },
+    {
+      "repo": "openclaw/openclaw",
+      "stars": 395191,
+      "language": "TypeScript",
+      "pushed_at": "2026-11-25T16:34:41Z"
+    },
+    {
+      "repo": "donnemartin/system-design-primer",
+      "stars": 379209,
+      "language": "Python",
+      "pushed_at": "2026-09-15T01:10:09Z"
+    },
+    {
+      "repo": "nilbuild/developer-roadmap",
+      "stars": 372755,
+      "language": "TypeScript",
+      "pushed_at": "2026-11-25T14:12:25Z"
+    },
+    {
+      "repo": "jwasham/coding-interview-university",
+      "stars": 365052,
+      "language": null,
+      "pushed_at": "2026-11-07T16:03:02Z"
+    },
+    {
+      "repo": "awesome-selfhosted/awesome-selfhosted",
+      "stars": 340376,
+      "language": null,
+      "pushed_at": "2026-11-22T15:24:53Z"
+    },
+    {
+      "repo": "vinta/awesome-python",
+      "stars": 337072,
+      "language": "Python",
+      "pushed_at": "2026-11-17T10:02:01Z"
+    },
+    {
+      "repo": "mattpocock/skills",
+      "stars": 332697,
+      "language": "Shell",
+      "pushed_at": "2026-11-25T12:09:27Z"
+    },
+    {
+      "repo": "obra/superpowers",
+      "stars": 326378,
+      "language": "Shell",
+      "pushed_at": "2026-11-24T23:59:04Z"
+    },
+    {
+      "repo": "affaan-m/ECC",
+      "stars": 310559,
+      "language": "JavaScript",
+      "pushed_at": "2026-11-23T04:55:48Z"
+    },
+    {
+      "repo": "practical-tutorials/project-based-learning",
+      "stars": 290470,
+      "language": "Python",
+      "pushed_at": "2026-11-23T06:41:02Z"
+    },
+    {
+      "repo": "deepseek-ai/deepseek-harness",
+      "stars": 286938,
+      "language": "TypeScript",
+      "pushed_at": "2026-11-22T11:00:05Z"
+    },
+    {
+      "repo": "996icu/996.ICU",
+      "stars": 277255,
+      "language": null,
+      "pushed_at": "2025-08-22T06:01:29Z"
+    },
+    {
+      "repo": "NousResearch/hermes-agent",
+      "stars": 266044,
+      "language": "Python",
+      "pushed_at": "2026-11-25T16:37:46Z"
+    },
+    {
+      "repo": "trimstray/the-book-of-secret-knowledge",
+      "stars": 261259,
+      "language": null,
+      "pushed_at": "2024-11-19T14:00:38Z"
+    }
+  ]
+}

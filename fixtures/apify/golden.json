@@ -1,0 +1,137 @@
+{
+  "source": "apify",
+  "schema_version": "apify.v1",
+  "captured_at": "2026-11-25T16:38:22+00:00",
+  "frozen": true,
+  "count": 20,
+  "required_fields": [
+    "title",
+    "owner"
+  ],
+  "optional_fields": [
+    "total_users",
+    "pricing_model"
+  ],
+  "records": [
+    {
+      "title": "Startup Funding Finder",
+      "owner": "caprolok",
+      "total_users": 322,
+      "pricing_model": "PAY_PER_EVENT"
+    },
+    {
+      "title": "TikTok Scraper",
+      "owner": "clockworks",
+      "total_users": 405070,
+      "pricing_model": "PAY_PER_EVENT"
+    },
+    {
+      "title": "Instagram Scraper",
+      "owner": "apify",
+      "total_users": 503046,
+      "pricing_model": "PAY_PER_EVENT"
+    },
+    {
+      "title": "Google Maps Scraper",
+      "owner": "compass",
+      "total_users": 713429,
+      "pricing_model": "PAY_PER_EVENT"
+    },
+    {
+      "title": "Google Search Results Scraper",
+      "owner": "apify",
+      "total_users": 242542,
+      "pricing_model": "PAY_PER_EVENT"
+    },
+    {
+      "title": "YouTube Scraper",
+      "owner": "streamers",
+      "total_users": 214764,
+      "pricing_model": "PAY_PER_EVENT"
+    },
+    {
+      "title": "E-commerce Scraping Tool",
+      "owner": "apify",
+      "total_users": 16567,
+      "pricing_model": "PAY_PER_EVENT"
+    },
+    {
+      "title": "Facebook Ads Library Scraper",
+      "owner": "apify",
+      "total_users": 56931,
+      "pricing_model": "PAY_PER_EVENT"
+    },
+    {
+      "title": "Website Content Crawler",
+      "owner": "apify",
+      "total_users": 181494,
+      "pricing_model": "FREE"
+    },
+    {
+      "title": "Tweet Scraper V2 - X Scraper / Twitter Scraper / X.com Scraper",
+      "owner": "apidojo",
+      "total_users": 135893,
+      "pricing_model": "PAY_PER_EVENT"
+    },
+    {
+      "title": "Instagram Post Scraper",
+      "owner": "apify",
+      "total_users": 163603,
+      "pricing_model": "PAY_PER_EVENT"
+    },
+    {
+      "title": "LinkedIn Profile Scraper + Email (No Cookies)",
+      "owner": "harvestapi",
+      "total_users": 103476,
+      "pricing_model": "PAY_PER_EVENT"
+    },
+    {
+      "title": "LinkedIn Profile Search Scraper (No Cookies) Find all people",
+      "owner": "harvestapi",
+      "total_users": 59498,
+      "pricing_model": "PAY_PER_EVENT"
+    },
+    {
+      "title": "Instagram Reel Scraper",
+      "owner": "apify",
+      "total_users": 206398,
+      "pricing_model": "PAY_PER_EVENT"
+    },
+    {
+      "title": "Instagram Comments Scraper",
+      "owner": "apify",
+      "total_users": 77330,
+      "pricing_model": "PAY_PER_EVENT"
+    },
+    {
+      "title": "Instagram Profile Scraper",
+      "owner": "apify",
+      "total_users": 304909,
+      "pricing_model": "PAY_PER_EVENT"
+    },
+    {
+      "title": "Facebook Posts Scraper",
+      "owner": "apify",
+      "total_users": 147329,
+      "pricing_model": "PAY_PER_EVENT"
+    },
+    {
+      "title": "TikTok Comments Scraper",
+      "owner": "clockworks",
+      "total_users": 57680,
+      "pricing_model": "PAY_PER_EVENT"
+    },
+    {
+      "title": "Facebook Ad Library Scraper",
+      "owner": "curious_coder",
+      "total_users": 55933,
+      "pricing_model": "PAY_PER_EVENT"
+    },
+    {
+      "title": "TikTok Profile Scraper",
+      "owner": "clockworks",
+      "total_users": 69706,
+      "pricing_model": "PAY_PER_EVENT"
+    }
+  ]
+}

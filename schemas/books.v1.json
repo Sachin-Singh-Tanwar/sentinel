@@ -3,8 +3,8 @@
   "fields": {
     "title":  {"type": "string",  "required": true},
     "price":  {"type": "number",  "required": true},
-    "url":    {"type": "url",     "required": true},
-    "rating": {"type": "enum",    "values": ["One", "Two", "Three", "Four", "Five"], "required": false},
-    "stock":  {"type": "integer", "required": false}
+    "rating": {"type": "enum",    "values": ["One", "Two", "Three", "Four", "Five"], "required": true},
+    "stock":  {"type": "integer", "required": false},
+    "url":    {"type": "url",     "required": true}
   }
 }

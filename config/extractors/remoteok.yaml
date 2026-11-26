@@ -2,6 +2,7 @@
 #
 # JSON array at the document root, so `container` is empty. The first element is a
 # legal notice rather than a job; `require: position` drops it and anything like it.
+# Fields match the partner-verified remoteok.v1 fixture: position, company, tags, date.
 
 source: remoteok
 
@@ -16,7 +17,7 @@ versions:
         path: position
       company:
         path: company
-      url:
-        path: url
+      tags:
+        path: tags
       date:
         path: date

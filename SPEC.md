@@ -40,15 +40,30 @@ Every source has a versioned schema in `schemas/<source>.v1.json`:
     "title":  {"type": "string", "required": true},
     "price":  {"type": "number", "required": true},
     "rating": {"type": "enum", "values": ["One","Two","Three","Four","Five"], "required": true},
-    "stock":  {"type": "integer", "required": true},
+    "stock":  {"type": "integer", "required": false},
     "url":    {"type": "url", "required": true}
   }
 }
 ```
 
+**A2 reconciliation (owner-locked 2026-11-26):** `rating` is **REQUIRED** and `stock`
+is **OPTIONAL** for `books.v1`. This supersedes the earlier `stock: required: true`
+example and the capture script's `rating`/`stock` optional list. The four handover
+fixtures contribute their own partner-verified field sets; together these are the only
+schemas used by `golden.load()`. No silent alternate schema is retained.
+
+| schema | required fields | optional fields |
+|---|---|---|
+| `books.v1` | `title`, `price`, `rating`, `url` | `stock` |
+| `hn.v1` | `title`, `url` | `rank`, `points` |
+| `gh.v1` | `repo`, `stars` | `language`, `pushed_at` |
+| `apify.v1` | `title`, `owner` | `total_users`, `pricing_model` |
+| `remoteok.v1` | `position`, `company` | `tags`, `date` |
+
 Rules:
-- `required: true` fields participate in the drift score.
+- `required: true` fields participate in the drift score and must be non-null in a golden record.
 - A record that fails type or enum validation counts as a **schema failure**, not an empty row.
+- An optional field may be null; when present it must still satisfy its declared type.
 - Schema changes are additive-only within a major version; breaking changes create `v2`.
 
 ---

@@ -1,7 +1,8 @@
 # Extractor versions for `apify` (api.apify.com/v2/store).
 #
 # JSON. `stats.totalUsers` is the field most likely to change shape, which is what
-# makes this source worth watching.
+# makes this source worth watching. Fields match the partner-verified apify.v1
+# fixture: title, owner, total_users, pricing_model.
 
 source: apify
 
@@ -14,10 +15,10 @@ versions:
     fields:
       title:
         path: title
-      username:
+      owner:
         path: username
-      url:
-        path: url
-      users:
+      total_users:
         path: stats.totalUsers
         parse: int
+      pricing_model:
+        path: currentPricingInfo.pricingModel

@@ -45,7 +45,7 @@ def _coerce(raw: Any, spec: dict[str, Any]) -> Any:
         return None
     if isinstance(raw, str):
         return raw.strip() or None
-    if isinstance(raw, (int, float, bool)):
+    if isinstance(raw, (int, float, bool, list)):
         return raw
     return None
 
