@@ -1,0 +1,240 @@
+{
+  "id": 9,
+  "source": "books",
+  "state": "VERIFIED",
+  "opened_run_id": 52,
+  "closed_run_id": null,
+  "drift_detected_at": "2026-11-26T14:33:11.231663Z",
+  "verified_at": "2026-11-26T14:33:11.357090Z",
+  "mttr_seconds": 1,
+  "staged": true,
+  "signals": {
+    "empty_streak": {
+      "metric": "empty_streak",
+      "state": "DOWN",
+      "threshold": 3,
+      "triggered": false,
+      "value": 1
+    },
+    "http_fail_streak": {
+      "metric": "http_fail_streak",
+      "state": "DOWN",
+      "threshold": 3,
+      "triggered": false,
+      "value": 0
+    },
+    "record_count_drop": {
+      "metric": "record_count_ratio",
+      "state": "DRIFT",
+      "threshold": 0.4,
+      "triggered": true,
+      "value": 0.0
+    },
+    "required_null_rate": {
+      "metric": "required_null_rate",
+      "state": "DRIFT",
+      "threshold": 0.2,
+      "triggered": false,
+      "value": 0.0
+    },
+    "schema_fail_rate": {
+      "metric": "schema_fail_rate",
+      "state": "DRIFT",
+      "threshold": 0.1,
+      "triggered": false,
+      "value": 0.0
+    }
+  },
+  "summary": null,
+  "before_version": "books.v1",
+  "after_version": "books.v2",
+  "diff": {
+    "container": {
+      "after": "//article[contains(@class,'product_card')]",
+      "before": "//article[contains(@class,'product_pod')]",
+      "changed": true
+    },
+    "fields": {
+      "price": {
+        "after": ".//div[contains(@class,'product_price')] parse=money",
+        "before": ".//p[contains(@class,'price_color')] parse=money",
+        "changed": true
+      },
+      "rating": {
+        "after": ".//p[contains(@class,'rating-stars')] enum_from_class",
+        "before": ".//p[contains(@class,'star-rating')] enum_from_class",
+        "changed": true
+      },
+      "stock": {
+        "after": ".//p[contains(@class,'stock-badge')] parse=stock_count",
+        "before": ".//p[contains(@class,'instock')] parse=stock_count",
+        "changed": true
+      },
+      "title": {
+        "after": ".//a[@title] @title",
+        "before": ".//h3/a @title",
+        "changed": true
+      },
+      "url": {
+        "after": ".//a[@title] @href",
+        "before": ".//h3/a @href",
+        "changed": true
+      }
+    }
+  },
+  "gate_report": {
+    "decision": "PASS",
+    "field_accuracy": 1.0,
+    "fields": {
+      "price": {
+        "accuracy": 1.0,
+        "correct": 20,
+        "null_in_golden": 0,
+        "total": 20
+      },
+      "rating": {
+        "accuracy": 1.0,
+        "correct": 20,
+        "null_in_golden": 0,
+        "total": 20
+      },
+      "stock": {
+        "accuracy": 1.0,
+        "correct": 20,
+        "null_in_golden": 20,
+        "total": 20
+      },
+      "title": {
+        "accuracy": 1.0,
+        "correct": 20,
+        "null_in_golden": 0,
+        "total": 20
+      },
+      "url": {
+        "accuracy": 1.0,
+        "correct": 20,
+        "null_in_golden": 0,
+        "total": 20
+      }
+    },
+    "reasons": [],
+    "records_expected": 20,
+    "records_found": 20,
+    "regressions": [],
+    "threshold": 0.95
+  },
+  "candidate": {
+    "container": "//article[contains(@class,'product_card')]",
+    "fields": {
+      "price": {
+        "parse": "money",
+        "xpath": ".//div[contains(@class,'product_price')]"
+      },
+      "rating": {
+        "enum_from_class": [
+          "One",
+          "Two",
+          "Three",
+          "Four",
+          "Five"
+        ],
+        "xpath": ".//p[contains(@class,'rating-stars')]"
+      },
+      "stock": {
+        "parse": "stock_count",
+        "xpath": ".//p[contains(@class,'stock-badge')]"
+      },
+      "title": {
+        "attr": "title",
+        "xpath": ".//a[@title]"
+      },
+      "url": {
+        "absolute": true,
+        "attr": "href",
+        "xpath": ".//a[@title]"
+      }
+    },
+    "notes": "derived from snapshot: container article.product_card",
+    "proposed_by": "heuristic",
+    "version": "books.v2"
+  },
+  "duration_seconds": 1,
+  "duration_label": "resolved",
+  "detection_seconds": 0.112928,
+  "repair_seconds": 0.012499,
+  "timeline": [
+    {
+      "at": "2026-11-26T14:33:11.231663Z",
+      "kind": "drift_detected",
+      "run_id": 52,
+      "label": "drift detected on run #52"
+    },
+    {
+      "at": "2026-11-26T14:33:11.231663Z",
+      "kind": "run",
+      "run_id": 52,
+      "records": 0,
+      "schema_failures": 0,
+      "extractor": "books.v1",
+      "label": "run #52: 0 records"
+    },
+    {
+      "at": "2026-11-26T14:33:11.357090Z",
+      "kind": "gate_pass",
+      "label": "gate PASS \u2014 books.v2 applied (100.00% on golden set)"
+    },
+    {
+      "at": "2026-11-26T14:33:11.359660Z",
+      "kind": "run",
+      "run_id": 53,
+      "records": 20,
+      "schema_failures": 0,
+      "extractor": "books.v2",
+      "label": "run #53: 20 records"
+    },
+    {
+      "at": "2026-11-26T14:33:11.481527Z",
+      "kind": "run",
+      "run_id": 54,
+      "records": 20,
+      "schema_failures": 0,
+      "extractor": "books.v1",
+      "label": "run #54: 20 records"
+    }
+  ],
+  "runs": [
+    {
+      "id": 52,
+      "started_at": "2026-11-26T14:33:11.231663Z",
+      "finished_at": "2026-11-26T14:33:11.344591Z",
+      "records": 0,
+      "schema_failures": 0,
+      "http_status": 200,
+      "layout_rev": 2,
+      "staged": 1,
+      "extractor": "books.v1"
+    },
+    {
+      "id": 53,
+      "started_at": "2026-11-26T14:33:11.359660Z",
+      "finished_at": "2026-11-26T14:33:11.476822Z",
+      "records": 20,
+      "schema_failures": 0,
+      "http_status": 200,
+      "layout_rev": 2,
+      "staged": 1,
+      "extractor": "books.v2"
+    },
+    {
+      "id": 54,
+      "started_at": "2026-11-26T14:33:11.481527Z",
+      "finished_at": "2026-11-26T14:33:11.774798Z",
+      "records": 20,
+      "schema_failures": 0,
+      "http_status": 200,
+      "layout_rev": 1,
+      "staged": 0,
+      "extractor": "books.v1"
+    }
+  ]
+}
