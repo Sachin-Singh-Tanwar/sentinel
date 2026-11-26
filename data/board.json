@@ -1,0 +1,28 @@
+{
+  "generated_at": "2026-11-26T06:35:17.458911Z",
+  "sources": [
+    {
+      "id": "books",
+      "name": "books.toscrape.com",
+      "access": "html",
+      "state": "HEALTHY",
+      "drift_score": 0.0,
+      "active_incident": null,
+      "active_extractor": "books.v1",
+      "last_run": {
+        "id": 4,
+        "started_at": "2026-11-26T06:35:17.061550Z",
+        "records": 20,
+        "schema_failures": 0,
+        "http_status": 200,
+        "error": null
+      },
+      "sparkline": [
+        20,
+        0,
+        20,
+        20
+      ]
+    }
+  ]
+}

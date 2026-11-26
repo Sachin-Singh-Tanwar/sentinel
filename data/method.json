@@ -1,0 +1,52 @@
+{
+  "generated_at": "2026-11-26T06:35:17.460966Z",
+  "signals": [
+    {
+      "name": "schema_fail_rate",
+      "condition": "schema failures over the last 50 records > 10%",
+      "state": "DRIFT",
+      "metric": "schema_fail_rate"
+    },
+    {
+      "name": "required_null_rate",
+      "condition": "required nulls over the last 50 records > 20% and the previous run < 2%",
+      "state": "DRIFT",
+      "metric": "required_null_rate"
+    },
+    {
+      "name": "record_count_drop",
+      "condition": "records < 40% of the trailing 7-run median",
+      "state": "DRIFT",
+      "metric": "record_count_ratio"
+    },
+    {
+      "name": "empty_streak",
+      "condition": "3 consecutive runs with 0 records",
+      "state": "DOWN",
+      "metric": "empty_streak"
+    },
+    {
+      "name": "http_fail_streak",
+      "condition": "3 consecutive non-2xx responses",
+      "state": "DOWN",
+      "metric": "http_fail_streak"
+    }
+  ],
+  "window": {
+    "records": 50,
+    "runs_median": 7,
+    "down_streak": 3
+  },
+  "state_precedence": [
+    "DOWN",
+    "DRIFT",
+    "HEALTHY"
+  ],
+  "state_machine": "HEALTHY --drift--> DRIFT --repair--> REPAIRING --gate pass--> VERIFIED --> HEALTHY; gate fail --> NEEDS_HUMAN",
+  "gate": {
+    "field_accuracy_min": 0.95,
+    "require_zero_regression": true,
+    "decided_by": "the frozen golden set, never the model"
+  },
+  "limitation": "Repairs are verified against a fixed golden set. A layout the golden set has never seen can still pass and still be wrong \u2014 those cases need a human. Sentinel will not log in on your behalf, will not bypass bot protection, and will not collect or resell personal data."
+}
