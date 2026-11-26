@@ -1,0 +1,88 @@
+{
+  "id": 6,
+  "source": "apify",
+  "state": "DRIFT",
+  "opened_run_id": 23,
+  "closed_run_id": null,
+  "drift_detected_at": "2026-11-26T11:14:59.894845Z",
+  "verified_at": null,
+  "mttr_seconds": null,
+  "staged": false,
+  "signals": {
+    "empty_streak": {
+      "metric": "empty_streak",
+      "state": "DOWN",
+      "threshold": 3,
+      "triggered": false,
+      "value": 0
+    },
+    "http_fail_streak": {
+      "metric": "http_fail_streak",
+      "state": "DOWN",
+      "threshold": 3,
+      "triggered": false,
+      "value": 0
+    },
+    "record_count_drop": {
+      "metric": "record_count_ratio",
+      "state": "DRIFT",
+      "threshold": 0.4,
+      "triggered": false,
+      "value": 1.0
+    },
+    "required_null_rate": {
+      "metric": "required_null_rate",
+      "state": "DRIFT",
+      "threshold": 0.2,
+      "triggered": true,
+      "value": 0.3333333333333333
+    },
+    "schema_fail_rate": {
+      "metric": "schema_fail_rate",
+      "state": "DRIFT",
+      "threshold": 0.1,
+      "triggered": true,
+      "value": 0.3333333333333333
+    }
+  },
+  "summary": null,
+  "before_version": null,
+  "after_version": null,
+  "diff": null,
+  "gate_report": null,
+  "candidate": null,
+  "duration_seconds": 2,
+  "duration_label": "ongoing",
+  "detection_seconds": 0.283,
+  "repair_seconds": null,
+  "timeline": [
+    {
+      "at": "2026-11-26T11:14:59.894845Z",
+      "kind": "drift_detected",
+      "run_id": 23,
+      "label": "drift detected on run #23"
+    },
+    {
+      "at": "2026-11-26T11:14:59.894845Z",
+      "kind": "run",
+      "run_id": 23,
+      "records": 20,
+      "schema_failures": 20,
+      "extractor": "apify.v1",
+      "label": "run #23: 20 records"
+    }
+  ],
+  "runs": [
+    {
+      "id": 23,
+      "started_at": "2026-11-26T11:14:59.894845Z",
+      "finished_at": "2026-11-26T11:15:00.178171Z",
+      "records": 20,
+      "schema_failures": 20,
+      "http_status": 200,
+      "layout_rev": 1,
+      "staged": 0,
+      "extractor": "apify.v1"
+    }
+  ]
+}

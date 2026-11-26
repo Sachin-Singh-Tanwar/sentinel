@@ -1,6 +1,345 @@
 {
-  "generated_at": "2026-11-26T06:48:46.449544Z",
+  "generated_at": "2026-11-26T11:15:02.579929Z",
   "incidents": [
+    {
+      "id": 7,
+      "source": "books",
+      "state": "VERIFIED",
+      "opened_run_id": 26,
+      "closed_run_id": null,
+      "drift_detected_at": "2026-11-26T11:15:01.449814Z",
+      "verified_at": "2026-11-26T11:15:01.834458Z",
+      "mttr_seconds": 1,
+      "staged": true,
+      "signals": {
+        "empty_streak": {
+          "metric": "empty_streak",
+          "state": "DOWN",
+          "threshold": 3,
+          "triggered": false,
+          "value": 1
+        },
+        "http_fail_streak": {
+          "metric": "http_fail_streak",
+          "state": "DOWN",
+          "threshold": 3,
+          "triggered": false,
+          "value": 0
+        },
+        "record_count_drop": {
+          "metric": "record_count_ratio",
+          "state": "DRIFT",
+          "threshold": 0.4,
+          "triggered": true,
+          "value": 0.0
+        },
+        "required_null_rate": {
+          "metric": "required_null_rate",
+          "state": "DRIFT",
+          "threshold": 0.2,
+          "triggered": false,
+          "value": 0.0
+        },
+        "schema_fail_rate": {
+          "metric": "schema_fail_rate",
+          "state": "DRIFT",
+          "threshold": 0.1,
+          "triggered": false,
+          "value": 0.0
+        }
+      },
+      "summary": null,
+      "before_version": "books.v1",
+      "after_version": "books.v2",
+      "diff": {
+        "container": {
+          "after": "//article[contains(@class,'product_card')]",
+          "before": "//article[contains(@class,'product_pod')]",
+          "changed": true
+        },
+        "fields": {
+          "price": {
+            "after": ".//div[contains(@class,'product_price')] parse=money",
+            "before": ".//p[contains(@class,'price_color')] parse=money",
+            "changed": true
+          },
+          "rating": {
+            "after": ".//p[contains(@class,'rating-stars')] enum_from_class",
+            "before": ".//p[contains(@class,'star-rating')] enum_from_class",
+            "changed": true
+          },
+          "stock": {
+            "after": ".//p[contains(@class,'stock-badge')] parse=stock_count",
+            "before": ".//p[contains(@class,'instock')] parse=stock_count",
+            "changed": true
+          },
+          "title": {
+            "after": ".//a[@title] @title",
+            "before": ".//h3/a @title",
+            "changed": true
+          },
+          "url": {
+            "after": ".//a[@title] @href",
+            "before": ".//h3/a @href",
+            "changed": true
+          }
+        }
+      },
+      "gate_report": {
+        "decision": "PASS",
+        "field_accuracy": 1.0,
+        "fields": {
+          "price": {
+            "accuracy": 1.0,
+            "correct": 20,
+            "null_in_golden": 0,
+            "total": 20
+          },
+          "rating": {
+            "accuracy": 1.0,
+            "correct": 20,
+            "null_in_golden": 0,
+            "total": 20
+          },
+          "stock": {
+            "accuracy": 1.0,
+            "correct": 20,
+            "null_in_golden": 20,
+            "total": 20
+          },
+          "title": {
+            "accuracy": 1.0,
+            "correct": 20,
+            "null_in_golden": 0,
+            "total": 20
+          },
+          "url": {
+            "accuracy": 1.0,
+            "correct": 20,
+            "null_in_golden": 0,
+            "total": 20
+          }
+        },
+        "reasons": [],
+        "records_expected": 20,
+        "records_found": 20,
+        "regressions": [],
+        "threshold": 0.95
+      },
+      "candidate": {
+        "container": "//article[contains(@class,'product_card')]",
+        "fields": {
+          "price": {
+            "parse": "money",
+            "xpath": ".//div[contains(@class,'product_price')]"
+          },
+          "rating": {
+            "enum_from_class": [
+              "One",
+              "Two",
+              "Three",
+              "Four",
+              "Five"
+            ],
+            "xpath": ".//p[contains(@class,'rating-stars')]"
+          },
+          "stock": {
+            "parse": "stock_count",
+            "xpath": ".//p[contains(@class,'stock-badge')]"
+          },
+          "title": {
+            "attr": "title",
+            "xpath": ".//a[@title]"
+          },
+          "url": {
+            "absolute": true,
+            "attr": "href",
+            "xpath": ".//a[@title]"
+          }
+        },
+        "notes": "derived from snapshot: container article.product_card",
+        "proposed_by": "heuristic",
+        "version": "books.v2"
+      },
+      "duration_seconds": 1,
+      "duration_label": "resolved",
+      "detection_seconds": 0.373,
+      "repair_seconds": 0.011
+    },
+    {
+      "id": 6,
+      "source": "apify",
+      "state": "DRIFT",
+      "opened_run_id": 23,
+      "closed_run_id": null,
+      "drift_detected_at": "2026-11-26T11:14:59.894845Z",
+      "verified_at": null,
+      "mttr_seconds": null,
+      "staged": false,
+      "signals": {
+        "empty_streak": {
+          "metric": "empty_streak",
+          "state": "DOWN",
+          "threshold": 3,
+          "triggered": false,
+          "value": 0
+        },
+        "http_fail_streak": {
+          "metric": "http_fail_streak",
+          "state": "DOWN",
+          "threshold": 3,
+          "triggered": false,
+          "value": 0
+        },
+        "record_count_drop": {
+          "metric": "record_count_ratio",
+          "state": "DRIFT",
+          "threshold": 0.4,
+          "triggered": false,
+          "value": 1.0
+        },
+        "required_null_rate": {
+          "metric": "required_null_rate",
+          "state": "DRIFT",
+          "threshold": 0.2,
+          "triggered": true,
+          "value": 0.3333333333333333
+        },
+        "schema_fail_rate": {
+          "metric": "schema_fail_rate",
+          "state": "DRIFT",
+          "threshold": 0.1,
+          "triggered": true,
+          "value": 0.3333333333333333
+        }
+      },
+      "summary": null,
+      "before_version": null,
+      "after_version": null,
+      "diff": null,
+      "gate_report": null,
+      "candidate": null,
+      "duration_seconds": 2,
+      "duration_label": "ongoing",
+      "detection_seconds": 0.283,
+      "repair_seconds": null
+    },
+    {
+      "id": 5,
+      "source": "gh",
+      "state": "DRIFT",
+      "opened_run_id": 22,
+      "closed_run_id": null,
+      "drift_detected_at": "2026-11-26T11:14:59.062869Z",
+      "verified_at": null,
+      "mttr_seconds": null,
+      "staged": false,
+      "signals": {
+        "empty_streak": {
+          "metric": "empty_streak",
+          "state": "DOWN",
+          "threshold": 3,
+          "triggered": false,
+          "value": 0
+        },
+        "http_fail_streak": {
+          "metric": "http_fail_streak",
+          "state": "DOWN",
+          "threshold": 3,
+          "triggered": false,
+          "value": 0
+        },
+        "record_count_drop": {
+          "metric": "record_count_ratio",
+          "state": "DRIFT",
+          "threshold": 0.4,
+          "triggered": false,
+          "value": 1.0
+        },
+        "required_null_rate": {
+          "metric": "required_null_rate",
+          "state": "DRIFT",
+          "threshold": 0.2,
+          "triggered": true,
+          "value": 0.3333333333333333
+        },
+        "schema_fail_rate": {
+          "metric": "schema_fail_rate",
+          "state": "DRIFT",
+          "threshold": 0.1,
+          "triggered": true,
+          "value": 0.3333333333333333
+        }
+      },
+      "summary": null,
+      "before_version": null,
+      "after_version": null,
+      "diff": null,
+      "gate_report": null,
+      "candidate": null,
+      "duration_seconds": 3,
+      "duration_label": "ongoing",
+      "detection_seconds": 0.721,
+      "repair_seconds": null
+    },
+    {
+      "id": 4,
+      "source": "hn",
+      "state": "DRIFT",
+      "opened_run_id": 21,
+      "closed_run_id": null,
+      "drift_detected_at": "2026-11-26T11:14:58.836873Z",
+      "verified_at": null,
+      "mttr_seconds": null,
+      "staged": false,
+      "signals": {
+        "empty_streak": {
+          "metric": "empty_streak",
+          "state": "DOWN",
+          "threshold": 3,
+          "triggered": false,
+          "value": 0
+        },
+        "http_fail_streak": {
+          "metric": "http_fail_streak",
+          "state": "DOWN",
+          "threshold": 3,
+          "triggered": false,
+          "value": 0
+        },
+        "record_count_drop": {
+          "metric": "record_count_ratio",
+          "state": "DRIFT",
+          "threshold": 0.4,
+          "triggered": false,
+          "value": 1.0
+        },
+        "required_null_rate": {
+          "metric": "required_null_rate",
+          "state": "DRIFT",
+          "threshold": 0.2,
+          "triggered": false,
+          "value": 0.0
+        },
+        "schema_fail_rate": {
+          "metric": "schema_fail_rate",
+          "state": "DRIFT",
+          "threshold": 0.1,
+          "triggered": true,
+          "value": 0.5
+        }
+      },
+      "summary": null,
+      "before_version": null,
+      "after_version": null,
+      "diff": null,
+      "gate_report": null,
+      "candidate": null,
+      "duration_seconds": 3,
+      "duration_label": "ongoing",
+      "detection_seconds": 0.109,
+      "repair_seconds": null
+    },
     {
       "id": 3,
       "source": "books",
@@ -162,7 +501,9 @@
         "version": "books.v2"
       },
       "duration_seconds": 1,
-      "duration_label": "resolved"
+      "duration_label": "resolved",
+      "detection_seconds": 0.317,
+      "repair_seconds": 0.01
     },
     {
       "id": 2,
@@ -325,7 +666,9 @@
         "version": "books.v2"
       },
       "duration_seconds": 1,
-      "duration_label": "resolved"
+      "duration_label": "resolved",
+      "detection_seconds": 0.439,
+      "repair_seconds": 0.014
     },
     {
       "id": 1,
@@ -488,7 +831,9 @@
         "version": "books.v2"
       },
       "duration_seconds": 1,
-      "duration_label": "resolved"
+      "duration_label": "resolved",
+      "detection_seconds": 0.415,
+      "repair_seconds": 0.014
     }
   ]
 }

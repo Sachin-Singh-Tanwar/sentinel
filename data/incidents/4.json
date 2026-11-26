@@ -1,0 +1,88 @@
+{
+  "id": 4,
+  "source": "hn",
+  "state": "DRIFT",
+  "opened_run_id": 21,
+  "closed_run_id": null,
+  "drift_detected_at": "2026-11-26T11:14:58.836873Z",
+  "verified_at": null,
+  "mttr_seconds": null,
+  "staged": false,
+  "signals": {
+    "empty_streak": {
+      "metric": "empty_streak",
+      "state": "DOWN",
+      "threshold": 3,
+      "triggered": false,
+      "value": 0
+    },
+    "http_fail_streak": {
+      "metric": "http_fail_streak",
+      "state": "DOWN",
+      "threshold": 3,
+      "triggered": false,
+      "value": 0
+    },
+    "record_count_drop": {
+      "metric": "record_count_ratio",
+      "state": "DRIFT",
+      "threshold": 0.4,
+      "triggered": false,
+      "value": 1.0
+    },
+    "required_null_rate": {
+      "metric": "required_null_rate",
+      "state": "DRIFT",
+      "threshold": 0.2,
+      "triggered": false,
+      "value": 0.0
+    },
+    "schema_fail_rate": {
+      "metric": "schema_fail_rate",
+      "state": "DRIFT",
+      "threshold": 0.1,
+      "triggered": true,
+      "value": 0.5
+    }
+  },
+  "summary": null,
+  "before_version": null,
+  "after_version": null,
+  "diff": null,
+  "gate_report": null,
+  "candidate": null,
+  "duration_seconds": 3,
+  "duration_label": "ongoing",
+  "detection_seconds": 0.109,
+  "repair_seconds": null,
+  "timeline": [
+    {
+      "at": "2026-11-26T11:14:58.836873Z",
+      "kind": "drift_detected",
+      "run_id": 21,
+      "label": "drift detected on run #21"
+    },
+    {
+      "at": "2026-11-26T11:14:58.836873Z",
+      "kind": "run",
+      "run_id": 21,
+      "records": 30,
+      "schema_failures": 30,
+      "extractor": "hn.v1",
+      "label": "run #21: 30 records"
+    }
+  ],
+  "runs": [
+    {
+      "id": 21,
+      "started_at": "2026-11-26T11:14:58.836873Z",
+      "finished_at": "2026-11-26T11:14:58.945676Z",
+      "records": 30,
+      "schema_failures": 30,
+      "http_status": 200,
+      "layout_rev": 1,
+      "staged": 0,
+      "extractor": "hn.v1"
+    }
+  ]
+}
