@@ -1,0 +1,13 @@
+{
+  "name": "sentinel-e2e",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Dev-only browser check. Playwright is NOT a pipeline dependency (SPEC §12).",
+  "scripts": {
+    "check": "node check.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.65.1"
+  }
+}

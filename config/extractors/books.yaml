@@ -1,0 +1,29 @@
+# Extractor versions for `books`.
+#
+# A version is DATA, not code: a container XPath plus per-field XPaths. Repairing a
+# layout change means adding a version row, which is what makes apply/revert cheap and
+# makes step 5 (four more sources) config-only.
+
+source: books
+
+versions:
+  - version: books.v1
+    notes: listing page as published; stock is not on this page, so it stays null
+    container: "//article[contains(@class,'product_pod')]"
+    fields:
+      title:
+        xpath: ".//h3/a"
+        attr: title
+      price:
+        xpath: ".//p[contains(@class,'price_color')]"
+        parse: money
+      rating:
+        xpath: ".//p[contains(@class,'star-rating')]"
+        enum_from_class: ["One", "Two", "Three", "Four", "Five"]
+      stock:
+        xpath: ".//p[contains(@class,'instock')]"
+        parse: stock_count
+      url:
+        xpath: ".//h3/a"
+        attr: href
+        absolute: true

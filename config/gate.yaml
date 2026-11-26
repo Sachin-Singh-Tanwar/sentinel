@@ -1,0 +1,7 @@
+# Gate constants — SPEC §6 step 4.
+# The golden set decides; the model (or heuristic) only proposes.
+
+version: 1
+
+field_accuracy_min: 0.95
+require_zero_regression: true

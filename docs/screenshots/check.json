@@ -1,0 +1,11 @@
+{
+  "mode": "static snapshot",
+  "base": "http://127.0.0.1:4173",
+  "console_errors": [],
+  "failures": [],
+  "screenshots": [
+    "../../docs/screenshots/board.png",
+    "../../docs/screenshots/incident.png",
+    "../../docs/screenshots/method.png"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "mode": "live API",
+  "base": "http://127.0.0.1:4173",
+  "console_errors": [],
+  "failures": [],
+  "screenshots": [
+    "../../docs/screenshots/live-board.png",
+    "../../docs/screenshots/live-incident.png",
+    "../../docs/screenshots/live-method.png"
+  ]
+}

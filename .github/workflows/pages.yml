@@ -1,0 +1,100 @@
+name: pages
+
+# SPEC §14: the dashboard is built here, never on the VM. The public demo reads static
+# JSON from the `data` branch, so it keeps working when the API is down.
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: unit tests (gate, revert, refusals, golden guard)
+        run: python -m pytest -q
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt
+
+      - name: restore demo state from the data branch
+        run: |
+          mkdir -p state
+          if git fetch origin data --depth=1; then
+            git archive origin/data | tar -x -C state
+            echo "restored $(ls -1 state | tr '\n' ' ')"
+          else
+            echo "no data branch yet — starting fresh"
+          fi
+
+      - name: staged demo (healthy -> drift -> gate -> verified -> revert)
+        env:
+          SENTINEL_DB: state/sentinel.db
+        run: python scripts/demo.py state/data
+
+      - name: publish the data branch
+        run: |
+          mkdir -p publish
+          cp -r state/data publish/data
+          if [ -f state/sentinel.db ]; then cp state/sentinel.db publish/sentinel.db; fi
+          cd publish
+          git init -q -b data
+          git add -A
+          git -c user.name="sentinel-bot" -c user.email="sentinel-bot@users.noreply.github.com" \
+            commit -q -m "data: demo run $(date -u +%FT%TZ)"
+          git push --force \
+            "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" data
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: dashboard/package-lock.json
+
+      - name: build dashboard
+        working-directory: dashboard
+        run: |
+          npm ci
+          mkdir -p public/data
+          cp -r ../publish/data/* public/data/
+          npm run build
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dashboard/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
