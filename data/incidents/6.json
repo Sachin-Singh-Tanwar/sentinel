@@ -1,9 +1,9 @@
 {
   "id": 6,
   "source": "apify",
-  "state": "DRIFT",
+  "state": "INVALIDATED",
   "opened_run_id": 23,
-  "closed_run_id": null,
+  "closed_run_id": 37,
   "drift_detected_at": "2026-11-26T11:14:59.894845Z",
   "verified_at": null,
   "mttr_seconds": null,
@@ -45,15 +45,15 @@
       "value": 0.3333333333333333
     }
   },
-  "summary": null,
+  "summary": "Closed: our configuration defect, not source drift; no repair was performed. The stored v1 extractor fields did not match the YAML/schema and ensure_active never activated the corrected YAML.",
   "before_version": null,
   "after_version": null,
   "diff": null,
   "gate_report": null,
   "candidate": null,
-  "duration_seconds": 2,
-  "duration_label": "ongoing",
-  "detection_seconds": 0.283,
+  "duration_seconds": null,
+  "duration_label": "invalidated",
+  "detection_seconds": 0.283326,
   "repair_seconds": null,
   "timeline": [
     {
@@ -70,6 +70,38 @@
       "schema_failures": 20,
       "extractor": "apify.v1",
       "label": "run #23: 20 records"
+    },
+    {
+      "at": "2026-11-26T13:29:13.683957Z",
+      "kind": "run",
+      "run_id": 35,
+      "records": 20,
+      "schema_failures": 0,
+      "extractor": "apify.v2",
+      "label": "run #35: 20 records"
+    },
+    {
+      "at": "2026-11-26T13:29:16.282878Z",
+      "kind": "run",
+      "run_id": 36,
+      "records": 20,
+      "schema_failures": 0,
+      "extractor": "apify.v2",
+      "label": "run #36: 20 records"
+    },
+    {
+      "at": "2026-11-26T13:29:19.056601Z",
+      "kind": "run",
+      "run_id": 37,
+      "records": 20,
+      "schema_failures": 0,
+      "extractor": "apify.v2",
+      "label": "run #37: 20 records"
+    },
+    {
+      "at": "2026-11-26T13:29:20.696987Z",
+      "kind": "invalidated",
+      "label": "Closed: our configuration defect, not source drift; no repair was performed. The stored v1 extractor fields did not match the YAML/schema and ensure_active never activated the corrected YAML."
     }
   ],
   "runs": [
@@ -83,6 +115,39 @@
       "layout_rev": 1,
       "staged": 0,
       "extractor": "apify.v1"
+    },
+    {
+      "id": 35,
+      "started_at": "2026-11-26T13:29:13.683957Z",
+      "finished_at": "2026-11-26T13:29:15.324716Z",
+      "records": 20,
+      "schema_failures": 0,
+      "http_status": 200,
+      "layout_rev": 1,
+      "staged": 0,
+      "extractor": "apify.v2"
+    },
+    {
+      "id": 36,
+      "started_at": "2026-11-26T13:29:16.282878Z",
+      "finished_at": "2026-11-26T13:29:17.922102Z",
+      "records": 20,
+      "schema_failures": 0,
+      "http_status": 200,
+      "layout_rev": 1,
+      "staged": 0,
+      "extractor": "apify.v2"
+    },
+    {
+      "id": 37,
+      "started_at": "2026-11-26T13:29:19.056601Z",
+      "finished_at": "2026-11-26T13:29:20.696987Z",
+      "records": 20,
+      "schema_failures": 0,
+      "http_status": 200,
+      "layout_rev": 1,
+      "staged": 0,
+      "extractor": "apify.v2"
     }
   ]
 }

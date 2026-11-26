@@ -160,8 +160,8 @@
   },
   "duration_seconds": 1,
   "duration_label": "resolved",
-  "detection_seconds": 0.373,
-  "repair_seconds": 0.011,
+  "detection_seconds": 0.373491,
+  "repair_seconds": 0.011153,
   "timeline": [
     {
       "at": "2026-11-26T11:15:01.449814Z",
@@ -200,6 +200,15 @@
       "schema_failures": 0,
       "extractor": "books.v1",
       "label": "run #28: 20 records"
+    },
+    {
+      "at": "2026-11-26T13:28:56.095792Z",
+      "kind": "run",
+      "run_id": 29,
+      "records": 20,
+      "schema_failures": 0,
+      "extractor": "books.v1",
+      "label": "run #29: 20 records"
     }
   ],
   "runs": [
@@ -229,6 +238,17 @@
       "id": 28,
       "started_at": "2026-11-26T11:15:02.206301Z",
       "finished_at": "2026-11-26T11:15:02.574922Z",
+      "records": 20,
+      "schema_failures": 0,
+      "http_status": 200,
+      "layout_rev": 1,
+      "staged": 0,
+      "extractor": "books.v1"
+    },
+    {
+      "id": 29,
+      "started_at": "2026-11-26T13:28:56.095792Z",
+      "finished_at": "2026-11-26T13:28:59.976050Z",
       "records": 20,
       "schema_failures": 0,
       "http_status": 200,

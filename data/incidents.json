@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-26T11:15:02.579929Z",
+  "generated_at": "2026-11-26T13:38:15.878367Z",
   "incidents": [
     {
       "id": 7,
@@ -163,15 +163,15 @@
       },
       "duration_seconds": 1,
       "duration_label": "resolved",
-      "detection_seconds": 0.373,
-      "repair_seconds": 0.011
+      "detection_seconds": 0.373491,
+      "repair_seconds": 0.011153
     },
     {
       "id": 6,
       "source": "apify",
-      "state": "DRIFT",
+      "state": "INVALIDATED",
       "opened_run_id": 23,
-      "closed_run_id": null,
+      "closed_run_id": 37,
       "drift_detected_at": "2026-11-26T11:14:59.894845Z",
       "verified_at": null,
       "mttr_seconds": null,
@@ -213,23 +213,23 @@
           "value": 0.3333333333333333
         }
       },
-      "summary": null,
+      "summary": "Closed: our configuration defect, not source drift; no repair was performed. The stored v1 extractor fields did not match the YAML/schema and ensure_active never activated the corrected YAML.",
       "before_version": null,
       "after_version": null,
       "diff": null,
       "gate_report": null,
       "candidate": null,
-      "duration_seconds": 2,
-      "duration_label": "ongoing",
-      "detection_seconds": 0.283,
+      "duration_seconds": null,
+      "duration_label": "invalidated",
+      "detection_seconds": 0.283326,
       "repair_seconds": null
     },
     {
       "id": 5,
       "source": "gh",
-      "state": "DRIFT",
+      "state": "INVALIDATED",
       "opened_run_id": 22,
-      "closed_run_id": null,
+      "closed_run_id": 34,
       "drift_detected_at": "2026-11-26T11:14:59.062869Z",
       "verified_at": null,
       "mttr_seconds": null,
@@ -271,23 +271,23 @@
           "value": 0.3333333333333333
         }
       },
-      "summary": null,
+      "summary": "Closed: our configuration defect, not source drift; no repair was performed. The stored v1 extractor fields did not match the YAML/schema and ensure_active never activated the corrected YAML.",
       "before_version": null,
       "after_version": null,
       "diff": null,
       "gate_report": null,
       "candidate": null,
-      "duration_seconds": 3,
-      "duration_label": "ongoing",
-      "detection_seconds": 0.721,
+      "duration_seconds": null,
+      "duration_label": "invalidated",
+      "detection_seconds": 0.720978,
       "repair_seconds": null
     },
     {
       "id": 4,
       "source": "hn",
-      "state": "DRIFT",
+      "state": "INVALIDATED",
       "opened_run_id": 21,
-      "closed_run_id": null,
+      "closed_run_id": 31,
       "drift_detected_at": "2026-11-26T11:14:58.836873Z",
       "verified_at": null,
       "mttr_seconds": null,
@@ -329,15 +329,15 @@
           "value": 0.5
         }
       },
-      "summary": null,
+      "summary": "Closed: our configuration defect, not source drift; no repair was performed. The stored v1 extractor fields did not match the YAML/schema and ensure_active never activated the corrected YAML.",
       "before_version": null,
       "after_version": null,
       "diff": null,
       "gate_report": null,
       "candidate": null,
-      "duration_seconds": 3,
-      "duration_label": "ongoing",
-      "detection_seconds": 0.109,
+      "duration_seconds": null,
+      "duration_label": "invalidated",
+      "detection_seconds": 0.108803,
       "repair_seconds": null
     },
     {
@@ -502,8 +502,8 @@
       },
       "duration_seconds": 1,
       "duration_label": "resolved",
-      "detection_seconds": 0.317,
-      "repair_seconds": 0.01
+      "detection_seconds": 0.316556,
+      "repair_seconds": 0.009972
     },
     {
       "id": 2,
@@ -667,8 +667,8 @@
       },
       "duration_seconds": 1,
       "duration_label": "resolved",
-      "detection_seconds": 0.439,
-      "repair_seconds": 0.014
+      "detection_seconds": 0.438988,
+      "repair_seconds": 0.014044
     },
     {
       "id": 1,
@@ -832,8 +832,8 @@
       },
       "duration_seconds": 1,
       "duration_label": "resolved",
-      "detection_seconds": 0.415,
-      "repair_seconds": 0.014
+      "detection_seconds": 0.414985,
+      "repair_seconds": 0.014087
     }
   ]
 }

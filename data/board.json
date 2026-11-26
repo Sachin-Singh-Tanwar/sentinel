@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-26T11:15:02.579623Z",
+  "generated_at": "2026-11-26T13:38:15.878367Z",
   "sources": [
     {
       "id": "books",
@@ -10,10 +10,11 @@
       "active_incident": null,
       "active_extractor": "books.v1",
       "last_run": {
-        "id": 28,
-        "started_at": "2026-11-26T11:15:02.206301Z",
+        "id": 29,
+        "started_at": "2026-11-26T13:28:56.095792Z",
         "records": 20,
         "schema_failures": 0,
+        "required_nulls": 0,
         "http_status": 200,
         "error": null
       },
@@ -32,6 +33,7 @@
         20,
         20,
         0,
+        20,
         20,
         20
       ]
@@ -40,19 +42,22 @@
       "id": "hn",
       "name": "news.ycombinator.com",
       "access": "html",
-      "state": "DRIFT",
-      "drift_score": 0.5,
-      "active_incident": 4,
-      "active_extractor": "hn.v1",
+      "state": "HEALTHY",
+      "drift_score": 0.0,
+      "active_incident": null,
+      "active_extractor": "hn.v2",
       "last_run": {
-        "id": 21,
-        "started_at": "2026-11-26T11:14:58.836873Z",
+        "id": 31,
+        "started_at": "2026-11-26T13:29:04.056399Z",
         "records": 30,
-        "schema_failures": 30,
+        "schema_failures": 0,
+        "required_nulls": 0,
         "http_status": 200,
         "error": null
       },
       "sparkline": [
+        30,
+        30,
         30,
         30,
         30
@@ -62,19 +67,23 @@
       "id": "gh",
       "name": "api.github.com/search/repositories",
       "access": "json",
-      "state": "DRIFT",
-      "drift_score": 0.3333,
-      "active_incident": 5,
-      "active_extractor": "gh.v1",
+      "state": "HEALTHY",
+      "drift_score": 0.0,
+      "active_incident": null,
+      "active_extractor": "gh.v2",
       "last_run": {
-        "id": 22,
-        "started_at": "2026-11-26T11:14:59.062869Z",
+        "id": 34,
+        "started_at": "2026-11-26T13:29:11.409060Z",
         "records": 20,
-        "schema_failures": 20,
+        "schema_failures": 0,
+        "required_nulls": 0,
         "http_status": 200,
         "error": null
       },
       "sparkline": [
+        20,
+        20,
+        20,
         20,
         20,
         20
@@ -84,19 +93,23 @@
       "id": "apify",
       "name": "api.apify.com/v2/store",
       "access": "json",
-      "state": "DRIFT",
-      "drift_score": 0.3333,
-      "active_incident": 6,
-      "active_extractor": "apify.v1",
+      "state": "HEALTHY",
+      "drift_score": 0.0,
+      "active_incident": null,
+      "active_extractor": "apify.v2",
       "last_run": {
-        "id": 23,
-        "started_at": "2026-11-26T11:14:59.894845Z",
+        "id": 37,
+        "started_at": "2026-11-26T13:29:19.056601Z",
         "records": 20,
-        "schema_failures": 20,
+        "schema_failures": 0,
+        "required_nulls": 0,
         "http_status": 200,
         "error": null
       },
       "sparkline": [
+        20,
+        20,
+        20,
         20,
         20,
         20
@@ -109,16 +122,18 @@
       "state": "HEALTHY",
       "drift_score": 0.0,
       "active_incident": null,
-      "active_extractor": "remoteok.v1",
+      "active_extractor": "remoteok.v2",
       "last_run": {
-        "id": 24,
-        "started_at": "2026-11-26T11:15:00.292036Z",
+        "id": 38,
+        "started_at": "2026-11-26T13:29:22.094903Z",
         "records": 100,
         "schema_failures": 0,
+        "required_nulls": 0,
         "http_status": 200,
         "error": null
       },
       "sparkline": [
+        100,
         100,
         100,
         100

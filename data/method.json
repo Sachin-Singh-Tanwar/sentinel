@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-26T11:15:02.581343Z",
+  "generated_at": "2026-11-26T13:38:15.878367Z",
   "signals": [
     {
       "name": "schema_fail_rate",
@@ -42,7 +42,7 @@
     "DRIFT",
     "HEALTHY"
   ],
-  "state_machine": "HEALTHY --drift--> DRIFT --repair--> REPAIRING --gate pass--> VERIFIED --> HEALTHY; gate fail --> NEEDS_HUMAN",
+  "state_machine": "HEALTHY --drift--> DRIFT --repair--> REPAIRING --gate pass--> VERIFIED --> HEALTHY; gate fail --> NEEDS_HUMAN; config defect --> INVALIDATED (closed, no repair)",
   "gate": {
     "field_accuracy_min": 0.95,
     "require_zero_regression": true,
