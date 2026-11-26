@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-26T06:35:17.458911Z",
+  "generated_at": "2026-11-26T06:45:02.025943Z",
   "sources": [
     {
       "id": "books",
@@ -10,8 +10,8 @@
       "active_incident": null,
       "active_extractor": "books.v1",
       "last_run": {
-        "id": 4,
-        "started_at": "2026-11-26T06:35:17.061550Z",
+        "id": 12,
+        "started_at": "2026-11-26T06:45:01.803310Z",
         "records": 20,
         "schema_failures": 0,
         "http_status": 200,
@@ -21,7 +21,91 @@
         20,
         0,
         20,
+        20,
+        20,
+        0,
+        20,
         20
+      ]
+    },
+    {
+      "id": "hn",
+      "name": "news.ycombinator.com",
+      "access": "html",
+      "state": "HEALTHY",
+      "drift_score": 0.0,
+      "active_incident": null,
+      "active_extractor": "hn.v1",
+      "last_run": {
+        "id": 5,
+        "started_at": "2026-11-26T06:44:58.322299Z",
+        "records": 30,
+        "schema_failures": 0,
+        "http_status": 200,
+        "error": null
+      },
+      "sparkline": [
+        30
+      ]
+    },
+    {
+      "id": "gh",
+      "name": "api.github.com/search/repositories",
+      "access": "json",
+      "state": "HEALTHY",
+      "drift_score": 0.0,
+      "active_incident": null,
+      "active_extractor": "gh.v1",
+      "last_run": {
+        "id": 6,
+        "started_at": "2026-11-26T06:44:58.695823Z",
+        "records": 20,
+        "schema_failures": 0,
+        "http_status": 200,
+        "error": null
+      },
+      "sparkline": [
+        20
+      ]
+    },
+    {
+      "id": "apify",
+      "name": "api.apify.com/v2/store",
+      "access": "json",
+      "state": "HEALTHY",
+      "drift_score": 0.0,
+      "active_incident": null,
+      "active_extractor": "apify.v1",
+      "last_run": {
+        "id": 7,
+        "started_at": "2026-11-26T06:44:59.489654Z",
+        "records": 20,
+        "schema_failures": 0,
+        "http_status": 200,
+        "error": null
+      },
+      "sparkline": [
+        20
+      ]
+    },
+    {
+      "id": "remoteok",
+      "name": "remoteok.com/api",
+      "access": "json",
+      "state": "HEALTHY",
+      "drift_score": 0.0,
+      "active_incident": null,
+      "active_extractor": "remoteok.v1",
+      "last_run": {
+        "id": 8,
+        "started_at": "2026-11-26T06:44:59.809049Z",
+        "records": 100,
+        "schema_failures": 0,
+        "http_status": 200,
+        "error": null
+      },
+      "sparkline": [
+        100
       ]
     }
   ]
