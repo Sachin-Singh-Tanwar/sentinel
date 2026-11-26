@@ -4,6 +4,7 @@ Also covers the JSON extractor and the dispatch that keeps step 5 config-only:
 adding a source is a YAML entry, never a new parser branch.
 """
 
+import json
 from pathlib import Path
 
 import yaml
@@ -46,6 +47,29 @@ def test_every_source_has_a_schema_and_a_versioned_extractor():
             (ROOT / "config" / "extractors" / f"{source.id}.yaml").read_text(encoding="utf-8")
         )["versions"]
         assert any(v["version"] == source.extractor for v in versions), source.id
+
+
+def test_active_extractor_contract_matches_schema_and_registry():
+    """The YAML a run will use must name real schema fields and every required producer."""
+    for source in load_sources():
+        versions = yaml.safe_load(
+            (ROOT / "config" / "extractors" / f"{source.id}.yaml").read_text(encoding="utf-8")
+        )["versions"]
+        active = next(v for v in versions if v["version"] == source.extractor)
+        schema = json.loads(source.schema_path.read_text(encoding="utf-8"))
+        schema_fields = set(schema["fields"])
+        produced = set(active.get("fields", {}))
+
+        assert produced <= schema_fields, (
+            f"{source.id}: extractor fields absent from {source.schema_path.name}: "
+            f"{sorted(produced - schema_fields)}"
+        )
+        required = {name for name, rule in schema["fields"].items() if rule.get("required")}
+        assert required <= produced, (
+            f"{source.id}: required schema fields with no producer: "
+            f"{sorted(required - produced)}"
+        )
+        assert source.extractor in {v["version"] for v in versions}, source.id
 
 
 # --- the JSON engine --------------------------------------------------------

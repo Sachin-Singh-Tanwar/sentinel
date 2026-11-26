@@ -24,7 +24,7 @@ sources:
     url: https://news.ycombinator.com/
     schema: schemas/hn.v1.json
     golden: fixtures/hn/golden.json
-    extractor: hn.v1
+    extractor: hn.v2
     drift_character: real HTML layout drift on the front page; no auth
 
   - id: gh
@@ -33,7 +33,7 @@ sources:
     url: https://api.github.com/search/repositories?q=stars:%3E50000&sort=stars&per_page=20
     schema: schemas/gh.v1.json
     golden: fixtures/gh/golden.json
-    extractor: gh.v1
+    extractor: gh.v2
     drift_character: stable schema; unauthenticated rate limits are the real drift signal
 
   - id: apify
@@ -42,7 +42,7 @@ sources:
     url: https://api.apify.com/v2/store?limit=20
     schema: schemas/apify.v1.json
     golden: fixtures/apify/golden.json
-    extractor: apify.v1
+    extractor: apify.v2
     drift_character: field drift in pricing model and stats shape
 
   - id: remoteok
@@ -51,5 +51,5 @@ sources:
     url: https://remoteok.com/api
     schema: schemas/remoteok.v1.json
     golden: fixtures/remoteok/golden.json
-    extractor: remoteok.v1
+    extractor: remoteok.v2
     drift_character: occasional shape changes in the job feed

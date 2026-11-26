@@ -1,6 +1,13 @@
 {
   "mode": "static snapshot",
   "base": "http://127.0.0.1:4173",
+  "snapshot_source": "origin/data:ecc64b82deb38ce0e8ad132b109220a80d2b8cff:data/board.json",
+  "data_branch_sha": "ecc64b82deb38ce0e8ad132b109220a80d2b8cff",
+  "board_generated_at": "2026-11-26T13:38:15.878367Z",
+  "viewports": {
+    "desktop": "1280x900",
+    "mobile": "375x812"
+  },
   "console_errors": [],
   "failures": [],
   "screenshots": [

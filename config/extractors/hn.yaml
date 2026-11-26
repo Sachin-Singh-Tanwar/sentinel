@@ -7,7 +7,7 @@
 source: hn
 
 versions:
-  - version: hn.v1
+  - version: hn.v2
     notes: front page submission rows as published
     container: "//tr[contains(@class,'athing')]"
     fields:

@@ -195,8 +195,20 @@ export default function Board({ board, incidents, onOpen }) {
               {incident.staged && <StagedBadge />}
               <span className="ml-auto flex items-center gap-4 font-mono text-[11px] text-muted">
                 <span>detected {relTime(incident.drift_detected_at)}</span>
-                <span className={incident.verified_at ? "text-verified" : "text-drift"}>
-                  {incident.verified_at ? "repaired" : "ongoing"}
+                <span
+                  className={
+                    incident.state === "INVALIDATED"
+                      ? "text-muted"
+                      : incident.verified_at
+                        ? "text-verified"
+                        : "text-drift"
+                  }
+                >
+                  {incident.state === "INVALIDATED"
+                    ? "config fixed"
+                    : incident.verified_at
+                      ? "repaired"
+                      : "ongoing"}
                 </span>
               </span>
             </button>

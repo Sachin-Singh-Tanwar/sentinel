@@ -8,7 +8,7 @@
 source: gh
 
 versions:
-  - version: gh.v1
+  - version: gh.v2
     mode: json
     notes: search results for repositories above 50k stars
     container: items

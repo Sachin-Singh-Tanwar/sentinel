@@ -7,7 +7,7 @@
 source: remoteok
 
 versions:
-  - version: remoteok.v1
+  - version: remoteok.v2
     mode: json
     notes: public job feed; entry 0 is a terms-of-service notice
     container: ""

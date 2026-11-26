@@ -224,9 +224,31 @@ def source_state(conn: sqlite3.Connection, source: str) -> sqlite3.Row | None:
 def active_incident(conn: sqlite3.Connection, source: str) -> sqlite3.Row | None:
     return conn.execute(
         "SELECT * FROM incidents WHERE source = ? AND verified_at IS NULL"
-        " ORDER BY id DESC LIMIT 1",
+        " AND state != 'INVALIDATED' ORDER BY id DESC LIMIT 1",
         (source,),
     ).fetchone()
+
+
+def close_config_defect(conn: sqlite3.Connection, incident_id: int, run_id: int, reason: str) -> None:
+    """Close an incident opened by our own bad config, without a repair or MTTR."""
+    row = conn.execute("SELECT source, state FROM incidents WHERE id = ?", (incident_id,)).fetchone()
+    if row is None:
+        raise RuntimeError(f"unknown incident '{incident_id}'")
+    if row["state"] != "DRIFT":
+        raise RuntimeError(f"incident '{incident_id}' is '{row['state']}', not DRIFT")
+
+    conn.execute(
+        "UPDATE incidents SET state='INVALIDATED', closed_run_id=?, verified_at=NULL,"
+        " mttr_seconds=NULL, before_version=NULL, after_version=NULL, diff=NULL,"
+        " gate_report=NULL, candidate=NULL, summary=? WHERE id=?",
+        (run_id, reason, incident_id),
+    )
+    conn.execute(
+        "UPDATE source_state SET state='HEALTHY', drift_score=0, updated_at=?,"
+        " active_incident_id=NULL WHERE source=?",
+        (utc_now(), row["source"]),
+    )
+    conn.commit()
 
 
 def records_for_run(conn: sqlite3.Connection, run_id: int) -> list[dict]:

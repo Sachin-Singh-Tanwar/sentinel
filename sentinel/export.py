@@ -23,7 +23,7 @@ LIMITATION = (
 
 STATE_MACHINE = (
     "HEALTHY --drift--> DRIFT --repair--> REPAIRING --gate pass--> VERIFIED --> HEALTHY; "
-    "gate fail --> NEEDS_HUMAN"
+    "gate fail --> NEEDS_HUMAN; config defect --> INVALIDATED (closed, no repair)"
 )
 
 
@@ -44,7 +44,10 @@ def _between(start: str | None, end: str | None) -> float | None:
     """Exact seconds between two timestamps, or None when either is missing."""
     if not start or not end:
         return None
-    return round((_parse(end) - _parse(start)).total_seconds(), 3)
+    # Windows clocks have coarse ticks, so a completed in-process run can land on
+    # the same tick at both ends. Floor a completed phase at 1ms rather than
+    # reporting a real elapsed interval as zero.
+    return max((_parse(end) - _parse(start)).total_seconds(), 0.001)
 
 
 def _timing(conn, incident: dict) -> dict[str, float | None]:
@@ -59,6 +62,11 @@ def _timing(conn, incident: dict) -> dict[str, float | None]:
         (incident["opened_run_id"],),
     ).fetchone()
     finished = run["finished_at"] if run else None
+    if incident["state"] == "INVALIDATED":
+        return {
+            "detection_seconds": _between(run["started_at"], finished) if run else None,
+            "repair_seconds": None,
+        }
     return {
         "detection_seconds": _between(run["started_at"], finished) if run else None,
         "repair_seconds": _between(finished, incident["verified_at"]),
@@ -71,8 +79,9 @@ def build_board(conn) -> dict[str, Any]:
         state = store.source_state(conn, source.id)
         runs = list(
             conn.execute(
-                "SELECT id, started_at, records, schema_failures, http_status, staged,"
-                " extractor, error FROM runs WHERE source = ? ORDER BY id DESC LIMIT 20",
+                "SELECT id, started_at, records, schema_failures, required_nulls,"
+                " http_status, staged, extractor, error FROM runs WHERE source = ?"
+                " ORDER BY id DESC LIMIT 20",
                 (source.id,),
             )
         )
@@ -92,6 +101,7 @@ def build_board(conn) -> dict[str, Any]:
                     "started_at": last["started_at"],
                     "records": last["records"],
                     "schema_failures": last["schema_failures"],
+                    "required_nulls": last["required_nulls"],
                     "http_status": last["http_status"],
                     "error": last["error"],
                 }
@@ -119,7 +129,10 @@ def build_incident(conn, incident_id: int) -> dict[str, Any] | None:
     incident["gate_report"] = _json(incident["gate_report"])
     incident["candidate"] = _json(incident["candidate"])
 
-    if incident["mttr_seconds"] is not None:
+    if incident["state"] == "INVALIDATED":
+        incident["duration_seconds"] = None
+        incident["duration_label"] = "invalidated"
+    elif incident["mttr_seconds"] is not None:
         incident["duration_seconds"] = incident["mttr_seconds"]
         incident["duration_label"] = "resolved"
     else:
@@ -183,6 +196,17 @@ def build_incident(conn, incident_id: int) -> dict[str, Any] | None:
                 + (f" ({accuracy:.2%} on golden set)" if isinstance(accuracy, float) else ""),
             }
         )
+    elif incident["state"] == "INVALIDATED":
+        closed = conn.execute(
+            "SELECT finished_at FROM runs WHERE id = ?", (incident["closed_run_id"],)
+        ).fetchone()
+        timeline.append(
+            {
+                "at": closed["finished_at"] if closed else incident["drift_detected_at"],
+                "kind": "invalidated",
+                "label": incident["summary"] or "closed — configuration defect, no repair",
+            }
+        )
 
     timeline.sort(key=lambda item: item["at"])
     incident["timeline"] = timeline
@@ -199,12 +223,16 @@ def build_incidents(conn) -> dict[str, Any]:
         item["diff"] = _json(item["diff"])
         item["gate_report"] = _json(item["gate_report"])
         item["candidate"] = _json(item["candidate"])
-        item["duration_seconds"] = (
-            item["mttr_seconds"]
-            if item["mttr_seconds"] is not None
-            else _elapsed(item["drift_detected_at"])
-        )
-        item["duration_label"] = "resolved" if item["mttr_seconds"] is not None else "ongoing"
+        if item["state"] == "INVALIDATED":
+            item["duration_seconds"] = None
+            item["duration_label"] = "invalidated"
+        else:
+            item["duration_seconds"] = (
+                item["mttr_seconds"]
+                if item["mttr_seconds"] is not None
+                else _elapsed(item["drift_detected_at"])
+            )
+            item["duration_label"] = "resolved" if item["mttr_seconds"] is not None else "ongoing"
         item.update(_timing(conn, item))
         out.append(item)
     return {"generated_at": store.utc_now(), "incidents": out}

@@ -7,7 +7,7 @@
 source: apify
 
 versions:
-  - version: apify.v1
+  - version: apify.v2
     mode: json
     notes: Actor store listing, public unauthenticated endpoint
     container: data.items

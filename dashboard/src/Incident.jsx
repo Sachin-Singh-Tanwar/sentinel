@@ -14,6 +14,7 @@ const KIND_STYLES = {
   drift_detected: "border-drift bg-drift",
   gate_pass: "border-healthy bg-healthy",
   gate_reject: "border-down bg-down",
+  invalidated: "border-line bg-muted",
   run: "border-line bg-muted",
 };
 
@@ -52,6 +53,12 @@ export default function Incident({ incident, onBack }) {
         </p>
       )}
 
+      {incident.state === "INVALIDATED" && (
+        <p className="rounded-md border border-line bg-line/10 px-4 py-3 text-[13px] text-muted">
+          {incident.summary || "Closed: configuration defect, not source drift. No repair was performed."}
+        </p>
+      )}
+
       <Panel className="grid grid-cols-2 gap-6 px-5 py-4 md:grid-cols-4">
         <Meta label="detected">
           {clockTime(incident.drift_detected_at)}
@@ -62,8 +69,11 @@ export default function Incident({ incident, onBack }) {
         <Meta label="repaired">
           {incident.verified_at ? clockTime(incident.verified_at) : "—"}
           <span className="mt-0.5 block text-[10px] text-muted">
-            repair {precise(incident.repair_seconds)}
-            {incident.verified_at ? ` · ${relTime(incident.verified_at)}` : " · ongoing"}
+            {incident.state === "INVALIDATED"
+              ? "repair — · no repair performed"
+              : `repair ${precise(incident.repair_seconds)}${
+                  incident.verified_at ? ` · ${relTime(incident.verified_at)}` : " · ongoing"
+                }`}
           </span>
         </Meta>
         <Meta label="gate">

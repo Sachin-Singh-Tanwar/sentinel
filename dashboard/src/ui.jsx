@@ -5,6 +5,7 @@ const STATE_STYLES = {
   DRIFT: "text-drift border-drift/40 bg-drift/10",
   DOWN: "text-down border-down/40 bg-down/10",
   NEEDS_HUMAN: "text-down border-down/40 bg-down/10",
+  INVALIDATED: "text-muted border-line bg-line/30",
   REPAIRING: "text-verified border-verified/40 bg-verified/10",
   VERIFIED: "text-verified border-verified/40 bg-verified/10",
   UNKNOWN: "text-muted border-line bg-line/30",

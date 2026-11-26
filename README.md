@@ -58,7 +58,7 @@ verified → revert) and writes the static JSON CI publishes.
 
 ```
 fetch ─┬─ snapshot (runs/<id>/snapshot.html)
-       ├─ extract (versioned spec: books.v1, hn.v1, gh.v1, …)
+       ├─ extract (one versioned spec per source; …)
        ├─ validate against schemas/<source>.v1.json
        ├─ drift signals (config/drift.yaml is the only source of thresholds)
        ├─ one state per source: DOWN > DRIFT > HEALTHY
