@@ -1,5 +1,5 @@
-// Dev-only browser check: renders all three screens, captures console errors, writes
-// screenshots. Run against the static build and against the live API.
+// Dev-only browser check: renders all three screens at desktop and 375px, captures
+// console errors, and writes the screenshots used as evidence.
 import { chromium } from "playwright";
 import { mkdirSync, writeFileSync } from "node:fs";
 
@@ -13,63 +13,111 @@ mkdirSync(OUT, { recursive: true });
 const suffix = API ? `?api=${encodeURIComponent(API)}` : "";
 const errors = [];
 const failures = [];
+const screenshots = [];
 
 const browser = await chromium.launch();
-const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
 
-page.on("console", (message) => {
-  if (message.type() === "error") errors.push({ page: page.url(), text: message.text() });
-});
-page.on("pageerror", (error) => {
-  errors.push({ page: page.url(), text: String(error) });
-});
-
-async function visit(hash, ready) {
-  await page.goto(`${BASE}/${suffix}${hash}`, { waitUntil: "networkidle" });
-  if (ready) await page.locator(ready).first().waitFor({ timeout: 10000 });
-  await page.waitForTimeout(200);
+function watch(pg) {
+  pg.on("console", (message) => {
+    if (message.type() === "error") errors.push({ page: pg.url(), text: message.text() });
+  });
+  pg.on("pageerror", (error) => {
+    errors.push({ page: pg.url(), text: String(error) });
+  });
 }
 
-async function shot(name, options = {}) {
+async function visit(pg, hash, ready) {
+  await pg.goto(`${BASE}/${suffix}${hash}`, { waitUntil: "networkidle" });
+  if (ready) await pg.locator(ready).first().waitFor({ timeout: 10000 });
+  await pg.waitForTimeout(200);
+}
+
+async function shot(pg, name) {
   const path = `${OUT}/${PREFIX}${name}.png`;
-  await page.screenshot({ path, fullPage: options.fullPage ?? true });
-  return path;
+  await pg.screenshot({ path, fullPage: true });
+  screenshots.push(path);
 }
 
-// Board
-await visit("#/board", "text=Sources");
-const boardText = await page.locator("body").innerText();
+async function noOverflow(pg, label) {
+  const { scrollWidth, innerWidth } = await pg.evaluate(() => ({
+    scrollWidth: document.documentElement.scrollWidth,
+    innerWidth: window.innerWidth,
+  }));
+  if (scrollWidth > innerWidth + 1) {
+    failures.push(`${label}: horizontal overflow ${scrollWidth}px > ${innerWidth}px`);
+  }
+}
+
+// --- desktop ---------------------------------------------------------------
+const desktop = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+watch(desktop);
+
+await visit(desktop, "#/board", "text=Sources");
+const boardText = await desktop.locator("body").innerText();
 if (!/HEALTHY|DRIFT|DOWN/.test(boardText)) failures.push("board: no state chip rendered");
-await shot("board");
+if (!/a breakage it caught/i.test(boardText)) failures.push("board: caught incident is not surfaced");
+if (!boardText.includes("STAGED DEMO")) failures.push("board: STAGED DEMO badge missing");
+if (boardText.includes("MTTR")) failures.push("board: MTTR still displayed");
+if (boardText.search(/a breakage it caught/i) > boardText.search(/sources/i)) {
+  failures.push("board: caught incident is below the source table");
+}
+if (!/detected/i.test(boardText) || !/repaired/i.test(boardText)) {
+  failures.push("board: detected/repaired split missing");
+}
+await shot(desktop, "desktop-board");
 
-// Incident — full page, then the two evidence sections on their own
-await visit("#/incident/1", "text=Selector diff");
-const incidentText = await page.locator("body").innerText();
+await visit(desktop, "#/incident/1", "text=Selector diff");
+const incidentText = await desktop.locator("body").innerText();
 if (!incidentText.includes("STAGED DEMO")) failures.push("incident: STAGED DEMO badge missing");
-if (!/MTTR/.test(incidentText)) failures.push("incident: MTTR missing");
+if (incidentText.includes("MTTR")) failures.push("incident: MTTR still displayed");
+if (!/detected/i.test(incidentText) || !/repaired/i.test(incidentText)) {
+  failures.push("incident: detected/repaired split missing");
+}
+if (!/scan \d+ms|scan \d+\.\d+s/.test(incidentText)) failures.push("incident: scan duration missing");
+if (!/repair \d+ms|repair \d+\.\d+s/.test(incidentText)) failures.push("incident: repair duration missing");
 if (!/20\/20/.test(incidentText)) failures.push("incident: golden 20/20 rows missing");
-await shot("incident");
+await shot(desktop, "desktop-incident");
 
-const diffSection = page.locator("text=Selector diff").first();
+const diffSection = desktop.locator("text=Selector diff").first();
 await diffSection.scrollIntoViewIfNeeded();
-await page.screenshot({ path: `${OUT}/${PREFIX}incident-diff.png` });
+await desktop.screenshot({ path: `${OUT}/${PREFIX}desktop-incident-diff.png` });
 
-const goldenSection = page.locator("text=Golden set report").first();
+const goldenSection = desktop.locator("text=Golden set report").first();
 await goldenSection.scrollIntoViewIfNeeded();
-await page.screenshot({ path: `${OUT}/${PREFIX}incident-golden.png` });
+await desktop.screenshot({ path: `${OUT}/${PREFIX}desktop-incident-golden.png` });
 
-// Method
-await visit("#/method", "text=Five signals");
-const methodText = await page.locator("body").innerText();
+await visit(desktop, "#/method", "text=Five signals");
+const methodText = await desktop.locator("body").innerText();
 if (!methodText.includes("golden set has never")) failures.push("method: limitation copy missing");
-await shot("method");
+await shot(desktop, "desktop-method");
 
 // Navigation by click, not just by URL
-await visit("#/board", "text=Recent incidents");
-await page.locator("text=Recent incidents").first().waitFor();
-await page.locator("button", { hasText: "#1" }).first().click();
-await page.waitForTimeout(400);
-if (!page.url().includes("/incident/1")) failures.push("board: clicking an incident did not navigate");
+await visit(desktop, "#/board", "text=Incident history");
+await desktop.locator("button", { hasText: "#1" }).first().click();
+await desktop.waitForTimeout(400);
+if (!desktop.url().includes("/incident/1")) failures.push("board: clicking an incident did not navigate");
+
+// --- 375px ----------------------------------------------------------------
+const mobile = await browser.newPage({
+  viewport: { width: 375, height: 812 },
+  deviceScaleFactor: 2,
+});
+watch(mobile);
+
+await visit(mobile, "#/board", "text=Sources");
+await noOverflow(mobile, "mobile board");
+const mobileBoard = await mobile.locator("body").innerText();
+if (!/a breakage it caught/i.test(mobileBoard)) failures.push("mobile board: caught incident missing");
+if (!mobileBoard.includes("STAGED DEMO")) failures.push("mobile board: STAGED DEMO badge missing");
+await shot(mobile, "mobile-board");
+
+await visit(mobile, "#/incident/1", "text=Selector diff");
+await noOverflow(mobile, "mobile incident");
+await shot(mobile, "mobile-incident");
+
+await visit(mobile, "#/method", "text=Five signals");
+await noOverflow(mobile, "mobile method");
+await shot(mobile, "mobile-method");
 
 await browser.close();
 
@@ -78,7 +126,7 @@ const report = {
   base: BASE,
   console_errors: errors,
   failures,
-  screenshots: [`${OUT}/${PREFIX}board.png`, `${OUT}/${PREFIX}incident.png`, `${OUT}/${PREFIX}method.png`],
+  screenshots,
 };
 writeFileSync(`${OUT}/${PREFIX}check.json`, JSON.stringify(report, null, 2));
 console.log(JSON.stringify(report, null, 2));

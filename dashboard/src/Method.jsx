@@ -15,6 +15,11 @@ export default function Method({ method }) {
           repair is proposed, then measured against 20 archived records that were captured
           once and frozen. The model does not decide. The golden set decides.
         </p>
+        <p className="mt-3 text-[13px] leading-relaxed text-muted">
+          Timing is reported as two separate events — when the run that noticed finished
+          scanning, and when the gate had applied a repair — so the elapsed time is
+          checkable rather than collapsed into one rounded number.
+        </p>
       </div>
 
       <div>
@@ -47,15 +52,15 @@ export default function Method({ method }) {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
-        <div>
+        <div className="min-w-0">
           <SectionLabel>State machine</SectionLabel>
           <Panel className="px-5 py-4">
-            <pre className="overflow-x-auto font-mono text-[11px] leading-relaxed text-muted">
+            <pre className="whitespace-pre-wrap break-words font-mono text-[11px] leading-relaxed text-muted">
               {method.state_machine}
             </pre>
           </Panel>
         </div>
-        <div>
+        <div className="min-w-0">
           <SectionLabel>Gate</SectionLabel>
           <Panel className="space-y-2 px-5 py-4 text-[13px]">
             <div className="flex justify-between gap-4">
@@ -70,7 +75,9 @@ export default function Method({ method }) {
             </div>
             <div className="flex justify-between gap-4">
               <span className="text-muted">decided by</span>
-              <span className="font-mono text-healthy">{method.gate?.decided_by}</span>
+              <span className="min-w-0 break-words text-right font-mono text-healthy">
+                {method.gate?.decided_by}
+              </span>
             </div>
           </Panel>
         </div>

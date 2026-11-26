@@ -4,8 +4,13 @@
   "console_errors": [],
   "failures": [],
   "screenshots": [
-    "../../docs/screenshots/board.png",
-    "../../docs/screenshots/incident.png",
-    "../../docs/screenshots/method.png"
+    "../../docs/screenshots/desktop-board.png",
+    "../../docs/screenshots/desktop-incident.png",
+    "../../docs/screenshots/desktop-incident-diff.png",
+    "../../docs/screenshots/desktop-incident-golden.png",
+    "../../docs/screenshots/desktop-method.png",
+    "../../docs/screenshots/mobile-board.png",
+    "../../docs/screenshots/mobile-incident.png",
+    "../../docs/screenshots/mobile-method.png"
   ]
 }

@@ -75,6 +75,24 @@ export function duration(seconds) {
   return `${hours}h ${minutes % 60}m`;
 }
 
+export function clockTime(iso) {
+  if (!iso) return "—";
+  const date = new Date(iso);
+  const pad = (value, size = 2) => String(value).padStart(size, "0");
+  return (
+    `${pad(date.getUTCHours())}:${pad(date.getUTCMinutes())}:${pad(date.getUTCSeconds())}` +
+    `.${pad(date.getUTCMilliseconds(), 3)}Z`
+  );
+}
+
+// Sub-second work is reported in milliseconds; anything longer in seconds. Two
+// decimals, never a rounded "1s".
+export function precise(seconds) {
+  if (seconds === null || seconds === undefined) return "—";
+  if (seconds < 1) return `${Math.round(seconds * 1000)}ms`;
+  return `${seconds.toFixed(2)}s`;
+}
+
 export function SectionLabel({ children }) {
   return (
     <div className="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-muted">{children}</div>

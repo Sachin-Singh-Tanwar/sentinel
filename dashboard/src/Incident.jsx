@@ -1,5 +1,5 @@
 import React from "react";
-import { Panel, SectionLabel, StagedBadge, StateChip, duration, relTime } from "./ui.jsx";
+import { Panel, SectionLabel, StagedBadge, StateChip, clockTime, precise, relTime } from "./ui.jsx";
 
 function Meta({ label, children }) {
   return (
@@ -53,14 +53,24 @@ export default function Incident({ incident, onBack }) {
       )}
 
       <Panel className="grid grid-cols-2 gap-6 px-5 py-4 md:grid-cols-4">
-        <Meta label="drift detected">{relTime(incident.drift_detected_at)}</Meta>
-        <Meta label="verified">
-          {incident.verified_at ? relTime(incident.verified_at) : "—"}
+        <Meta label="detected">
+          {clockTime(incident.drift_detected_at)}
+          <span className="mt-0.5 block text-[10px] text-muted">
+            scan {precise(incident.detection_seconds)} · {relTime(incident.drift_detected_at)}
+          </span>
         </Meta>
-        <Meta label="MTTR">
-          {incident.mttr_seconds !== null && incident.mttr_seconds !== undefined
-            ? duration(incident.mttr_seconds)
-            : `ongoing ${duration(incident.duration_seconds)}`}
+        <Meta label="repaired">
+          {incident.verified_at ? clockTime(incident.verified_at) : "—"}
+          <span className="mt-0.5 block text-[10px] text-muted">
+            repair {precise(incident.repair_seconds)}
+            {incident.verified_at ? ` · ${relTime(incident.verified_at)}` : " · ongoing"}
+          </span>
+        </Meta>
+        <Meta label="gate">
+          {report ? `${report.decision} ${(report.field_accuracy * 100).toFixed(2)}%` : "not run"}
+          <span className="mt-0.5 block text-[10px] text-muted">
+            {report ? `${report.records_found}/${report.records_expected} records` : "—"}
+          </span>
         </Meta>
         <Meta label="extractor">
           {incident.before_version || "—"}
@@ -149,7 +159,7 @@ export default function Incident({ incident, onBack }) {
         <SectionLabel>
           Golden set report — {report ? `${report.decision} at ${(report.field_accuracy * 100).toFixed(2)}%` : "not run"}
         </SectionLabel>
-        <Panel>
+        <Panel className="overflow-x-auto">
           <table className="w-full border-collapse text-sm">
             <thead>
               <tr className="text-left font-mono text-[10px] uppercase tracking-[0.16em] text-muted">

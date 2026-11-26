@@ -3,11 +3,12 @@
 A data pipeline that detects when a public source drifts, and proves any repair
 against a fixed golden set before it is trusted.
 
-Built from `SPEC.md` (v2, frozen — see the checksums below). `ACCEPTANCE.md` defines
-what "done" means. `DEVIATIONS.md` records decisions the spec is silent on.
+Built from `SPEC.md` (v2, amended 2026-11-26 (A2 reconciliation), frozen at that
+amended revision — see the checksums below). `ACCEPTANCE.md` defines what "done"
+means. `DEVIATIONS.md` records decisions the spec is silent on.
 
 ```
-SPEC.md        5104140b6da994cf8c526e6678bd15ccbde6cd870afbadb8b70e15c822e359d2  (8159 bytes)
+SPEC.md        d754ba5167e83dfcdc71d3b38b93a637d8ec4609f31fbdae499f553ca46dfd61  (9054 bytes)
 ACCEPTANCE.md  95ba7a6b1de4c3f0b3957178c0388fd736abdea1166dfa824282c93123588d24  (2088 bytes)
 ```
 
@@ -23,12 +24,14 @@ Build order is SPEC §13, and it is not skipped.
 | 2 | gate + revert + tests for pass and fail paths | **done** |
 | 3 | `/incidents/:id` payload with diff + golden report | **done** |
 | 4 | dashboard: Board → Incident → Method, Pages deploy | **done** |
-| 5 | remaining 4 sources (config only) | **configured + running**; golden sets awaited |
+| 5 | remaining 4 sources + sealed golden sets | **done**; sealed 5/5 |
 | 6 | staged-injection demo + badge | **done** |
 
-43 tests pass. `books` is the only source with a frozen golden set, so it is the only
-one where a repair can be certified; the other four are collected and validated but
-are not repairable until their handover fixtures land.
+44 tests pass. books is the only source where a repair can be certified: the other
+four have no archived raw payload, so no re-extraction is possible and their
+per-source 1.0000 gate is **UNVERIFIED**. Their sealed golden sets are present and
+used for validation, but a repair cannot be certified without raw input to re-extract
+from.
 
 ## Run it
 
@@ -95,15 +98,15 @@ candidate is stored on the incident for review and is never made active.
 | # | Check | Observed | Verdict |
 |---|---|---|---|
 | A1 | 5 sources, 0 with auth | 5 configured (`books`, `hn`, `gh`, `apify`, `remoteok`), 0 with auth | **pass** |
-| A2 | 5 golden sets, 20 records each | `books` 20/20 sealed; `hn`/`gh`/`apify`/`remoteok` absent (handover awaited) | **UNVERIFIED** — 1 of 5 |
-| A3 | HEALTHY → DRIFT in exactly 1 run | run 3 HEALTHY (20 rec) → inject → run 4 DRIFT (0 rec) | **pass** |
+| A2 | 5 golden sets, 20 records each | sealed 5/5, 20 records each, `verify_seal()` OK: `books` `ee01e30e0b65`, `hn` `a944344f187e`, `gh` `ed0a15b043ea`, `apify` `15a3c2600bea`, `remoteok` `2a8f3e99acbe` | **pass** — 5/5 |
+| A3 | HEALTHY → DRIFT in exactly 1 run | run 1 HEALTHY (20 rec) → inject → run 2 DRIFT (0 rec) | **pass** |
 | A4 | Gate rejects a wrong repair | price+rating null → REJECT at 0.6000, nothing applied; truncated 10/20 → REJECT at 0.5000 | **pass** |
 | A5 | Gate accepts a correct repair | PASS at 1.0000, `books.v2` created and made active | **pass** |
 | A6 | Repairs are revertible | revert to `books.v1`, next run 20 rec, 0 schema failures, golden reproduced | **pass** |
-| A7 | MTTR is real | live incident #1: `06:35:16.206207Z` → `06:35:16.635279Z`, 1s, rendered in the UI | **pass** |
+| A7 | MTTR is real | incident #1: detection 2.961 s, repair 0.804 s, total 4 s; measured from `var/sentinel.db` run 2 (`2026-11-26T06:20:13.562787Z` → `2026-11-26T06:20:16.523800Z`) to verified_at `2026-11-26T06:20:17.327345Z`, written to `data/incidents/1.json` by export `generated_at 2026-11-26T10:32:44.472333Z`; split rendered in the UI | **pass** |
 | A8 | Staged incidents labelled | `STAGED DEMO` badge rendered; 0 unlabelled staged incidents | **pass** |
 | A9 | Refusals enforced | loader raises; CLI exits non-zero on `login: true` and `captcha: solve` | **pass** |
-| A10 | Dashboard reads live API | 3 screens, 0 console errors in static and live-API modes; 50.49 kB gzip JS | **pass** |
+| A10 | Dashboard reads live API | 3 screens, 0 console errors, 0 failures at 1280x900 + 375x812 in local static e2e; 51.33 kB gzip JS | **pass** |
 
 ## Layout
 
@@ -113,9 +116,10 @@ config/drift.yaml          every drift threshold, one file
 config/gate.yaml           field accuracy floor + zero-regression rule
 config/extractors/*.yaml   versioned selectors, one file per source
 schemas/*.v1.json          field types and required flags
-fixtures/books/            sealed golden set + sha256
+fixtures/*/                sealed golden sets + sha256
+fixtures/PROVENANCE.md     source URLs, captured_at, shas, exact capture method
 sentinel/                  config, fetch, engines, schema, drift, gate, repair, export, api, cli
-scripts/                   one-time golden capture, staged demo
+scripts/                   staged demo; capture_golden.py was VM-only (see provenance)
 dashboard/                 React + Vite, three screens, static JSON or ?api=
 tools/e2e/                 dev-only Playwright check (not a pipeline dependency)
 .github/workflows/         test → collect → demo → data branch → build → Pages

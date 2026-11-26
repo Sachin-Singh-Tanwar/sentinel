@@ -31,12 +31,38 @@ def _json(value: str | None) -> Any:
     return json.loads(value) if value else None
 
 
-def _elapsed(start: str, end: str | None = None) -> int:
-    def parse(ts: str) -> datetime:
-        return datetime.fromisoformat(ts.replace("Z", "+00:00"))
+def _parse(ts: str) -> datetime:
+    return datetime.fromisoformat(ts.replace("Z", "+00:00"))
 
-    finish = parse(end) if end else datetime.now(timezone.utc)
-    return max(0, int((finish - parse(start)).total_seconds()))
+
+def _elapsed(start: str, end: str | None = None) -> int:
+    finish = _parse(end) if end else datetime.now(timezone.utc)
+    return max(0, int((finish - _parse(start)).total_seconds()))
+
+
+def _between(start: str | None, end: str | None) -> float | None:
+    """Exact seconds between two timestamps, or None when either is missing."""
+    if not start or not end:
+        return None
+    return round((_parse(end) - _parse(start)).total_seconds(), 3)
+
+
+def _timing(conn, incident: dict) -> dict[str, float | None]:
+    """Split the incident into its two observable phases.
+
+    detection = the run that noticed (fetch + extract + validate + signals)
+    repair    = propose + gate + apply, measured from that run finishing
+    mttr      = detection + repair, kept in the payload but never shown as one number.
+    """
+    run = conn.execute(
+        "SELECT started_at, finished_at FROM runs WHERE id = ?",
+        (incident["opened_run_id"],),
+    ).fetchone()
+    finished = run["finished_at"] if run else None
+    return {
+        "detection_seconds": _between(run["started_at"], finished) if run else None,
+        "repair_seconds": _between(finished, incident["verified_at"]),
+    }
 
 
 def build_board(conn) -> dict[str, Any]:
@@ -99,6 +125,8 @@ def build_incident(conn, incident_id: int) -> dict[str, Any] | None:
     else:
         incident["duration_seconds"] = _elapsed(incident["drift_detected_at"])
         incident["duration_label"] = "ongoing"
+
+    incident.update(_timing(conn, incident))
 
     last_run = conn.execute(
         "SELECT MAX(id) AS id FROM runs WHERE source = ?", (incident["source"],)
@@ -177,6 +205,7 @@ def build_incidents(conn) -> dict[str, Any]:
             else _elapsed(item["drift_detected_at"])
         )
         item["duration_label"] = "resolved" if item["mttr_seconds"] is not None else "ongoing"
+        item.update(_timing(conn, item))
         out.append(item)
     return {"generated_at": store.utc_now(), "incidents": out}
 
