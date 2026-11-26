@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-26T06:45:02.025943Z",
+  "generated_at": "2026-11-26T06:48:46.449361Z",
   "sources": [
     {
       "id": "books",
@@ -10,14 +10,18 @@
       "active_incident": null,
       "active_extractor": "books.v1",
       "last_run": {
-        "id": 12,
-        "started_at": "2026-11-26T06:45:01.803310Z",
+        "id": 20,
+        "started_at": "2026-11-26T06:48:46.168598Z",
         "records": 20,
         "schema_failures": 0,
         "http_status": 200,
         "error": null
       },
       "sparkline": [
+        20,
+        0,
+        20,
+        20,
         20,
         0,
         20,
@@ -37,14 +41,15 @@
       "active_incident": null,
       "active_extractor": "hn.v1",
       "last_run": {
-        "id": 5,
-        "started_at": "2026-11-26T06:44:58.322299Z",
+        "id": 13,
+        "started_at": "2026-11-26T06:48:42.438465Z",
         "records": 30,
         "schema_failures": 0,
         "http_status": 200,
         "error": null
       },
       "sparkline": [
+        30,
         30
       ]
     },
@@ -57,14 +62,15 @@
       "active_incident": null,
       "active_extractor": "gh.v1",
       "last_run": {
-        "id": 6,
-        "started_at": "2026-11-26T06:44:58.695823Z",
+        "id": 14,
+        "started_at": "2026-11-26T06:48:42.824807Z",
         "records": 20,
         "schema_failures": 0,
         "http_status": 200,
         "error": null
       },
       "sparkline": [
+        20,
         20
       ]
     },
@@ -77,14 +83,15 @@
       "active_incident": null,
       "active_extractor": "apify.v1",
       "last_run": {
-        "id": 7,
-        "started_at": "2026-11-26T06:44:59.489654Z",
+        "id": 15,
+        "started_at": "2026-11-26T06:48:43.770526Z",
         "records": 20,
         "schema_failures": 0,
         "http_status": 200,
         "error": null
       },
       "sparkline": [
+        20,
         20
       ]
     },
@@ -97,14 +104,15 @@
       "active_incident": null,
       "active_extractor": "remoteok.v1",
       "last_run": {
-        "id": 8,
-        "started_at": "2026-11-26T06:44:59.809049Z",
+        "id": 16,
+        "started_at": "2026-11-26T06:48:44.116857Z",
         "records": 100,
         "schema_failures": 0,
         "http_status": 200,
         "error": null
       },
       "sparkline": [
+        100,
         100
       ]
     }
