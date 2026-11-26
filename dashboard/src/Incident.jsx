@@ -66,11 +66,11 @@ export default function Incident({ incident, onBack }) {
             scan {precise(incident.detection_seconds)} · {relTime(incident.drift_detected_at)}
           </span>
         </Meta>
-        <Meta label="repaired">
+        <Meta label={incident.state === "INVALIDATED" ? "CLOSED" : "repaired"}>
           {incident.verified_at ? clockTime(incident.verified_at) : "—"}
           <span className="mt-0.5 block text-[10px] text-muted">
             {incident.state === "INVALIDATED"
-              ? "repair — · no repair performed"
+              ? "closed — · no repair performed"
               : `repair ${precise(incident.repair_seconds)}${
                   incident.verified_at ? ` · ${relTime(incident.verified_at)}` : " · ongoing"
                 }`}

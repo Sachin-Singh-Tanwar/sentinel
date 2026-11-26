@@ -68,7 +68,7 @@ function CaughtIncident({ incident, onOpen }) {
           onClick={() => onOpen(incident.id)}
           className="shrink-0 rounded-sm border border-drift/50 bg-drift/10 px-3 py-2 font-mono text-[11px] uppercase tracking-[0.14em] text-drift transition hover:bg-drift/20"
         >
-          Open incident #{incident.id} →
+          VIEW INCIDENT #{incident.id} →
         </button>
       </div>
 
