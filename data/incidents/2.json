@@ -389,6 +389,42 @@
       "schema_failures": 0,
       "extractor": "books.v1",
       "label": "run #62: 20 records"
+    },
+    {
+      "at": "2026-11-27T08:39:37.311420Z",
+      "kind": "run",
+      "run_id": 67,
+      "records": 20,
+      "schema_failures": 0,
+      "extractor": "books.v1",
+      "label": "run #67: 20 records"
+    },
+    {
+      "at": "2026-11-27T08:39:37.435168Z",
+      "kind": "run",
+      "run_id": 68,
+      "records": 0,
+      "schema_failures": 0,
+      "extractor": "books.v1",
+      "label": "run #68: 0 records"
+    },
+    {
+      "at": "2026-11-27T08:39:37.536344Z",
+      "kind": "run",
+      "run_id": 69,
+      "records": 20,
+      "schema_failures": 0,
+      "extractor": "books.v2",
+      "label": "run #69: 20 records"
+    },
+    {
+      "at": "2026-11-27T08:39:37.622111Z",
+      "kind": "run",
+      "run_id": 70,
+      "records": 20,
+      "schema_failures": 0,
+      "extractor": "books.v1",
+      "label": "run #70: 20 records"
     }
   ],
   "runs": [
@@ -649,6 +685,50 @@
       "id": 62,
       "started_at": "2026-11-26T21:37:09.801770Z",
       "finished_at": "2026-11-26T21:37:09.944149Z",
+      "records": 20,
+      "schema_failures": 0,
+      "http_status": 200,
+      "layout_rev": 1,
+      "staged": 0,
+      "extractor": "books.v1"
+    },
+    {
+      "id": 67,
+      "started_at": "2026-11-27T08:39:37.311420Z",
+      "finished_at": "2026-11-27T08:39:37.430681Z",
+      "records": 20,
+      "schema_failures": 0,
+      "http_status": 200,
+      "layout_rev": 1,
+      "staged": 0,
+      "extractor": "books.v1"
+    },
+    {
+      "id": 68,
+      "started_at": "2026-11-27T08:39:37.435168Z",
+      "finished_at": "2026-11-27T08:39:37.520940Z",
+      "records": 0,
+      "schema_failures": 0,
+      "http_status": 200,
+      "layout_rev": 2,
+      "staged": 1,
+      "extractor": "books.v1"
+    },
+    {
+      "id": 69,
+      "started_at": "2026-11-27T08:39:37.536344Z",
+      "finished_at": "2026-11-27T08:39:37.616820Z",
+      "records": 20,
+      "schema_failures": 0,
+      "http_status": 200,
+      "layout_rev": 2,
+      "staged": 1,
+      "extractor": "books.v2"
+    },
+    {
+      "id": 70,
+      "started_at": "2026-11-27T08:39:37.622111Z",
+      "finished_at": "2026-11-27T08:39:37.703157Z",
       "records": 20,
       "schema_failures": 0,
       "http_status": 200,
