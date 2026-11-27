@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-27T08:39:37.707770Z",
+  "generated_at": "2026-11-27T21:21:21.359414Z",
   "sources": [
     {
       "id": "books",
@@ -10,8 +10,8 @@
       "active_incident": null,
       "active_extractor": "books.v1",
       "last_run": {
-        "id": 70,
-        "started_at": "2026-11-27T08:39:37.622111Z",
+        "id": 78,
+        "started_at": "2026-11-27T21:21:21.036701Z",
         "records": 20,
         "schema_failures": 0,
         "required_nulls": 0,
@@ -19,8 +19,8 @@
         "error": null
       },
       "sparkline": [
-        0,
         20,
+        0,
         20,
         20,
         20,
@@ -50,8 +50,8 @@
       "active_incident": null,
       "active_extractor": "hn.v2",
       "last_run": {
-        "id": 63,
-        "started_at": "2026-11-27T08:39:35.352231Z",
+        "id": 71,
+        "started_at": "2026-11-27T21:21:16.783562Z",
         "records": 30,
         "schema_failures": 0,
         "required_nulls": 0,
@@ -59,6 +59,7 @@
         "error": null
       },
       "sparkline": [
+        30,
         30,
         30,
         30,
@@ -79,8 +80,8 @@
       "active_incident": null,
       "active_extractor": "gh.v2",
       "last_run": {
-        "id": 64,
-        "started_at": "2026-11-27T08:39:35.729677Z",
+        "id": 72,
+        "started_at": "2026-11-27T21:21:16.984390Z",
         "records": 20,
         "schema_failures": 0,
         "required_nulls": 0,
@@ -88,6 +89,7 @@
         "error": null
       },
       "sparkline": [
+        20,
         20,
         20,
         20,
@@ -109,8 +111,8 @@
       "active_incident": null,
       "active_extractor": "apify.v2",
       "last_run": {
-        "id": 65,
-        "started_at": "2026-11-27T08:39:36.582828Z",
+        "id": 73,
+        "started_at": "2026-11-27T21:21:17.949766Z",
         "records": 20,
         "schema_failures": 0,
         "required_nulls": 0,
@@ -118,6 +120,7 @@
         "error": null
       },
       "sparkline": [
+        20,
         20,
         20,
         20,
@@ -139,8 +142,8 @@
       "active_incident": null,
       "active_extractor": "remoteok.v2",
       "last_run": {
-        "id": 66,
-        "started_at": "2026-11-27T08:39:36.771562Z",
+        "id": 74,
+        "started_at": "2026-11-27T21:21:18.371957Z",
         "records": 100,
         "schema_failures": 0,
         "required_nulls": 0,
@@ -148,6 +151,7 @@
         "error": null
       },
       "sparkline": [
+        100,
         100,
         100,
         100,
