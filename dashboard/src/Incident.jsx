@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Panel, SectionLabel, StagedBadge, StateChip, clockTime, precise, relTime } from "./ui.jsx";
 
 function Meta({ label, children }) {
@@ -17,6 +17,48 @@ const KIND_STYLES = {
   invalidated: "border-line bg-muted",
   run: "border-line bg-muted",
 };
+
+const TIMELINE_PREVIEW = 5;
+
+function IncidentTimeline({ events }) {
+  const [expanded, setExpanded] = useState(false);
+  const visible = expanded ? events : events.slice(0, TIMELINE_PREVIEW);
+  const hidden = events.length - visible.length;
+
+  return (
+    <div>
+      <SectionLabel>Timeline</SectionLabel>
+      <ol className="space-y-0">
+        {visible.map((event, index) => (
+          <li key={index} className="flex gap-4 border-l border-line py-2 pl-4">
+            <span
+              className={`mt-1.5 h-2 w-2 shrink-0 -translate-x-[21px] rounded-full border ${
+                KIND_STYLES[event.kind] || "border-line bg-muted"
+              }`}
+            />
+            <span className="w-16 shrink-0 font-mono text-[11px] text-muted">
+              {relTime(event.at)}
+            </span>
+            <span className="text-[13px]">{event.label}</span>
+          </li>
+        ))}
+        {!events.length && (
+          <li className="font-mono text-[12px] text-muted">no events recorded</li>
+        )}
+      </ol>
+      {events.length > TIMELINE_PREVIEW && (
+        <button
+          type="button"
+          onClick={() => setExpanded((current) => !current)}
+          aria-expanded={expanded}
+          className="mt-3 font-mono text-[10px] uppercase tracking-[0.16em] text-muted hover:text-paper"
+        >
+          {expanded ? "show less" : `show more · ${hidden} more`}
+        </button>
+      )}
+    </div>
+  );
+}
 
 export default function Incident({ incident, onBack }) {
   if (!incident) {
@@ -88,27 +130,7 @@ export default function Incident({ incident, onBack }) {
         </Meta>
       </Panel>
 
-      <div>
-        <SectionLabel>Timeline</SectionLabel>
-        <ol className="space-y-0">
-          {(incident.timeline || []).map((event, index) => (
-            <li key={index} className="flex gap-4 border-l border-line py-2 pl-4">
-              <span
-                className={`mt-1.5 h-2 w-2 shrink-0 -translate-x-[21px] rounded-full border ${
-                  KIND_STYLES[event.kind] || "border-line bg-muted"
-                }`}
-              />
-              <span className="w-16 shrink-0 font-mono text-[11px] text-muted">
-                {relTime(event.at)}
-              </span>
-              <span className="text-[13px]">{event.label}</span>
-            </li>
-          ))}
-          {!(incident.timeline || []).length && (
-            <li className="font-mono text-[12px] text-muted">no events recorded</li>
-          )}
-        </ol>
-      </div>
+      <IncidentTimeline events={incident.timeline || []} />
 
       <div>
         <SectionLabel>Selector diff — before → after</SectionLabel>
