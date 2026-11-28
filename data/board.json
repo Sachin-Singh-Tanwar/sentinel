@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-27T21:21:21.359414Z",
+  "generated_at": "2026-11-28T06:40:15.957231Z",
   "sources": [
     {
       "id": "books",
@@ -10,8 +10,8 @@
       "active_incident": null,
       "active_extractor": "books.v1",
       "last_run": {
-        "id": 78,
-        "started_at": "2026-11-27T21:21:21.036701Z",
+        "id": 86,
+        "started_at": "2026-11-28T06:40:15.872936Z",
         "records": 20,
         "schema_failures": 0,
         "required_nulls": 0,
@@ -50,8 +50,8 @@
       "active_incident": null,
       "active_extractor": "hn.v2",
       "last_run": {
-        "id": 71,
-        "started_at": "2026-11-27T21:21:16.783562Z",
+        "id": 79,
+        "started_at": "2026-11-28T06:40:13.762396Z",
         "records": 30,
         "schema_failures": 0,
         "required_nulls": 0,
@@ -59,6 +59,7 @@
         "error": null
       },
       "sparkline": [
+        30,
         30,
         30,
         30,
@@ -80,8 +81,8 @@
       "active_incident": null,
       "active_extractor": "gh.v2",
       "last_run": {
-        "id": 72,
-        "started_at": "2026-11-27T21:21:16.984390Z",
+        "id": 80,
+        "started_at": "2026-11-28T06:40:14.130987Z",
         "records": 20,
         "schema_failures": 0,
         "required_nulls": 0,
@@ -89,6 +90,7 @@
         "error": null
       },
       "sparkline": [
+        20,
         20,
         20,
         20,
@@ -111,8 +113,8 @@
       "active_incident": null,
       "active_extractor": "apify.v2",
       "last_run": {
-        "id": 73,
-        "started_at": "2026-11-27T21:21:17.949766Z",
+        "id": 81,
+        "started_at": "2026-11-28T06:40:14.856206Z",
         "records": 20,
         "schema_failures": 0,
         "required_nulls": 0,
@@ -120,6 +122,7 @@
         "error": null
       },
       "sparkline": [
+        20,
         20,
         20,
         20,
@@ -142,8 +145,8 @@
       "active_incident": null,
       "active_extractor": "remoteok.v2",
       "last_run": {
-        "id": 74,
-        "started_at": "2026-11-27T21:21:18.371957Z",
+        "id": 82,
+        "started_at": "2026-11-28T06:40:15.036680Z",
         "records": 100,
         "schema_failures": 0,
         "required_nulls": 0,
@@ -151,6 +154,7 @@
         "error": null
       },
       "sparkline": [
+        100,
         100,
         100,
         100,
